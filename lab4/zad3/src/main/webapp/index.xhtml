@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+</h:head>
+<h:body>
+    <h:form>
+        <h:panelGroup>
+            <h:panelGrid columns="2">
+                <h:outputLabel for="firstName">Imie:</h:outputLabel>
+                <h:inputText value="#{user.firstName}" id="firstName"/>
+
+                <h:outputLabel for="lastName">Nazwisko</h:outputLabel>
+                <h:inputText value="#{user.lastName}" id="lastName" required="true"/>
+
+                <h:outputLabel for="age">Wiek:</h:outputLabel>
+                <h:inputText value="#{user.age}" id="age" required="true">
+                    <f:convertNumber integerOnly="true" type="number"/>
+                    <f:validateLongRange minimum="0" maximum="120"/>
+                </h:inputText>
+
+                <h:outputLabel for="sex">Płeć:</h:outputLabel>
+                <h:selectOneRadio value="#{user.sex}" id="sex">
+                    <f:selectItem itemValue="kobieta" itemLabel="Kobieta"/>
+                    <f:selectItem itemValue="mężczyzna" itemLabel="Mężczyzna"/>
+                </h:selectOneRadio>
+
+                <h:outputLabel for="voivodeship">Województwo:</h:outputLabel>
+                <h:selectOneMenu value="#{user.voivodeship}" id="voivodeship">
+                    <f:selectItem itemValue="Opolskie" itemLabel="Opolskie"/>
+                    <f:selectItem itemValue="Mazowieckie" itemLabel="Mazowieckie"/>
+                    <f:selectItem itemValue="Wielkopolskie" itemLabel="Wielkopolskie"/>
+                    <f:ajax execute="voivodeship" render="submitButton"/>
+                </h:selectOneMenu>
+            </h:panelGrid>
+        </h:panelGroup>
+
+        <!--<h:panelGroup id="submitButton" rendered="#{user.voivodeship != ''}">-->
+        <h:commandButton action="view-details" value="Zapisz" disabled="#{user.voivodeship!=null}"/>
+        <!--</h:panelGroup>-->
+    </h:form>
+</h:body>
+</html>

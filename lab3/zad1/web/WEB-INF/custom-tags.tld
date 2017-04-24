@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+    <description>Custom tags</description>
+    <tlib-version>2.1</tlib-version>
+    <short-name>custom-tags</short-name>
+    <uri>http://agh.edu.pl/soa/lab3/zad1/tag</uri>
+    <tag>
+        <name>session</name>
+        <tag-class>pl.edu.agh.soa.lab3.zad1.tag.SessionTag</tag-class>
+        <body-content>scriptless</body-content>
+    </tag>
+    <tag>
+        <name>active-users</name>
+        <tag-class>pl.edu.agh.soa.lab3.zad1.tag.ActiveUsersTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>sort</name>
+            <type>java.lang.String</type>
+            <required>true</required>
+        </attribute>
+        <attribute>
+            <name>color</name>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <name>paragraph</name>
+        <tag-class>pl.edu.agh.soa.lab3.zad1.tag.ParagraphTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>header</name>
+            <type>java.lang.String</type>
+            <required>true</required>
+        </attribute>
+        <attribute>
+            <name>align</name>
+            <type>java.lang.String</type>
+        </attribute>
+
+        <attribute>
+            <name>color</name>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <name>headerAlign</name>
+            <type>boolean</type>
+        </attribute>
+    </tag>
+</taglib>

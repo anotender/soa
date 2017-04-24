@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="pracownicy">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="pracownik" name="pracownik" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+        <xs:key name="pracownikId">
+            <xs:selector xpath="pracownik"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+        <xs:keyref name="pracownikIdRef" refer="pracownikId">
+            <xs:selector xpath="pracownik/podwladny"/>
+            <xs:field xpath="@idRef"/>
+        </xs:keyref>
+    </xs:element>
+
+    <xs:simpleType name="okresZatrudnienia">
+        <xs:union memberTypes="xs:duration bezterminowy"/>
+    </xs:simpleType>
+    <xs:simpleType name="bezterminowy">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="bezterminowo"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="pracownik">
+        <xs:sequence>
+            <xs:element name="okresZatrudnienia" type="okresZatrudnienia"/>
+            <xs:element name="email">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value=".+@.+\..+"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element type="podwladny" name="podwladni" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="id" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="podwladny">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="idRef"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+</xs:schema>

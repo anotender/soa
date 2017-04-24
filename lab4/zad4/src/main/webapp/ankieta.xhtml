@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+</h:head>
+<h:body>
+    <h:form>
+        <h:panelGroup>
+            <h:panelGrid columns="2">
+                <h:outputLabel for="imię">Imię: </h:outputLabel>
+                <h:inputText value="#{model.imie}" id="imię" required="true"/>
+
+                <h:outputLabel for="nazwisko">Nazwisko: </h:outputLabel>
+                <h:inputText value="#{model.nazwisko}" id="nazwisko"/>
+
+                <h:outputLabel for="adres">Adres: </h:outputLabel>
+                <h:inputText value="#{model.adres}" id="adres"/>
+
+                <h:outputLabel for="telefon">Telefon: </h:outputLabel>
+                <h:inputText value="#{model.telefon}" id="telefon">
+                    <f:validateRegex pattern="^[0-9]*$"/>
+                </h:inputText>
+
+                <h:outputLabel for="email">Email: </h:outputLabel>
+                <h:inputText value="#{model.email}" id="email" required="true">
+                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+                </h:inputText>
+
+                <h:outputLabel for="wiek">Wiek: </h:outputLabel>
+                <h:inputText value="#{model.wiek}" id="wiek"/>
+
+                <h:outputLabel for="wzrost">Wzrost: </h:outputLabel>
+                <h:inputText value="#{model.wzrost}" id="wzrost">
+                    <f:convertNumber integerOnly="true" type="number"/>
+                    <f:validateLongRange minimum="50" maximum="250"/>
+                </h:inputText>
+
+                <h:outputLabel for="waga">Waga: </h:outputLabel>
+                <h:inputText value="#{model.waga}" id="waga">
+                    <f:convertNumber integerOnly="true" type="number"/>
+                    <f:validateLongRange minimum="30" maximum="150"/>
+                </h:inputText>
+
+                <h:outputLabel for="płeć">Płeć: </h:outputLabel>
+                <h:selectOneRadio value="#{model.plec}" id="płeć">
+                    <f:selectItem itemValue="female" itemLabel="Kobieta"/>
+                    <f:selectItem itemValue="male" itemLabel="Mężczyzna"/>
+                    <f:ajax execute="płeć" render="kobieta facet"/>
+                </h:selectOneRadio>
+            </h:panelGrid>
+        </h:panelGroup>
+
+        <h:panelGroup id="kobieta">
+            <h:panelGrid columns="2">
+                <h:outputLabel for="obwodBiustu" rendered="#{model.plec eq 'female'}">Obwód biustu: </h:outputLabel>
+                <h:inputText value="#{femaleModel.obwodBiustu}" id="obwodBiustu" rendered="#{model.plec eq 'female'}"/>
+
+                <h:outputLabel for="wielkoscMiseczki"
+                               rendered="#{model.plec eq 'female'}">Wielkość miseczki: </h:outputLabel>
+                <h:inputText value="#{femaleModel.wielkoscMiseczki}" id="wielkoscMiseczki"
+                             rendered="#{model.plec eq 'female'}"/>
+
+                <h:outputLabel for="talia" rendered="#{model.plec eq 'female'}">Talia: </h:outputLabel>
+                <h:inputText value="#{femaleModel.talia}" id="talia" rendered="#{model.plec eq 'female'}"/>
+
+                <h:outputLabel for="biodra" rendered="#{model.plec eq 'female'}">Biodra: </h:outputLabel>
+                <h:inputText value="#{femaleModel.biodra}" id="biodra" rendered="#{model.plec eq 'female'}"/>
+
+                <h:outputLabel for="dlugoscNogiKobieta"
+                               rendered="#{model.plec eq 'female'}">Długość nogi: </h:outputLabel>
+                <h:inputText value="#{femaleModel.dlugoscNogi}" id="dlugoscNogiKobieta"
+                             rendered="#{model.plec eq 'female'}"/>
+            </h:panelGrid>
+        </h:panelGroup>
+
+        <h:panelGroup id="facet">
+            <h:panelGrid columns="2">
+                <h:outputLabel for="klatka" rendered="#{model.plec eq 'male'}">Klatka: </h:outputLabel>
+                <h:inputText value="#{maleModel.klatka}" id="klatka" rendered="#{model.plec eq 'male'}"/>
+
+                <h:outputLabel for="pas" rendered="#{model.plec eq 'male'}">Pas: </h:outputLabel>
+                <h:inputText value="#{maleModel.pas}" id="pas" rendered="#{model.plec eq 'male'}"/>
+
+                <h:outputLabel for="dlugoscNogiFacet" rendered="#{model.plec eq 'male'}">Długość nogi: </h:outputLabel>
+                <h:inputText value="#{maleModel.dlugoscNogi}" id="dlugoscNogiFacet" rendered="#{model.plec eq 'male'}"/>
+            </h:panelGrid>
+        </h:panelGroup>
+
+        <h:commandButton action="podsumowanie" value="Zapisz"/>
+    </h:form>
+</h:body>
+</html>

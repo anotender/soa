@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:body>
+    <h:panelGroup>
+        <h:panelGrid columns="2" border="1">
+            <h:outputLabel for="imię">Imię: </h:outputLabel>
+            <h:outputText value="#{model.imie}" id="imię"/>
+
+            <h:outputLabel for="nazwisko">Nazwisko: </h:outputLabel>
+            <h:outputText value="#{model.nazwisko}" id="nazwisko"/>
+
+            <h:outputLabel for="adres">Adres: </h:outputLabel>
+            <h:outputText value="#{model.adres}" id="adres"/>
+
+            <h:outputLabel for="telefon">Telefon: </h:outputLabel>
+            <h:outputText value="#{model.telefon}" id="telefon"/>
+
+            <h:outputLabel for="email">Email: </h:outputLabel>
+            <h:outputText value="#{model.email}" id="email"/>
+
+            <h:outputLabel for="wiek">Wiek: </h:outputLabel>
+            <h:outputText value="#{model.wiek}" id="wiek"/>
+
+            <h:outputLabel for="wzrost">Wzrost: </h:outputLabel>
+            <h:outputText value="#{model.wzrost}" id="wzrost"/>
+
+            <h:outputLabel for="waga">Waga: </h:outputLabel>
+            <h:outputText value="#{model.waga}" id="waga"/>
+
+            <h:outputLabel for="płeć">Płeć: </h:outputLabel>
+            <h:outputText value="#{model.plec}" id="płeć"/>
+        </h:panelGrid>
+    </h:panelGroup>
+
+    <br/>
+
+    <!--facet-->
+    <h:panelGroup rendered="#{model.plec eq 'male'}">
+        <h:panelGrid columns="2" border="1">
+            <h:outputLabel for="klatka">Klatka: </h:outputLabel>
+            <h:outputText value="#{maleModel.klatka}" id="klatka"/>
+
+            <h:outputLabel for="pas">Pas: </h:outputLabel>
+            <h:outputText value="#{maleModel.pas}" id="pas"/>
+
+            <h:outputLabel for="dlugoscNogiFacet">Długość nogi: </h:outputLabel>
+            <h:outputText value="#{maleModel.dlugoscNogi}" id="dlugoscNogiFacet"/>
+        </h:panelGrid>
+    </h:panelGroup>
+
+    <!--kobieta-->
+    <h:panelGroup rendered="#{model.plec eq 'female'}">
+        <h:panelGrid columns="2" border="1">
+            <h:outputLabel for="biodra">Biodra: </h:outputLabel>
+            <h:outputText value="#{femaleModel.biodra}" id="biodra"/>
+
+            <h:outputLabel for="obwodBiustu">Obwód biustu: </h:outputLabel>
+            <h:outputText value="#{femaleModel.obwodBiustu}" id="obwodBiustu"/>
+
+            <h:outputLabel for="talia">Talia: </h:outputLabel>
+            <h:outputText value="#{femaleModel.talia}" id="talia"/>
+
+            <h:outputLabel for="wielkoscMiseczki">Wielkość miseczki: </h:outputLabel>
+            <h:outputText value="#{femaleModel.wielkoscMiseczki}" id="wielkoscMiseczki"/>
+
+            <h:outputLabel for="dlugoscNogiKobieta">Długość nogi: </h:outputLabel>
+            <h:outputText value="#{femaleModel.dlugoscNogi}" id="dlugoscNogiKobieta"/>
+        </h:panelGrid>
+    </h:panelGroup>
+</h:body>
+<h:head>
+</h:head>
+
+</html>

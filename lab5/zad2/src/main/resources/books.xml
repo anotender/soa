@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<books>
+    <book>
+        <author>author</author>
+        <title lang="pl">tytuł</title>
+        <isbn>123456</isbn>
+    </book>
+    <book>
+        <author>autor3</author>
+        <title lang="en">title</title>
+        <isbn>1234567</isbn>
+    </book>
+    <book>
+        <author>autor1</author>
+        <author>autor2</author>
+        <author>autor3</author>
+        <title lang="pl">tytul1</title>
+        <isbn>title2</isbn>
+    </book>
+</books>

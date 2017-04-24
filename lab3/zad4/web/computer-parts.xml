@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<computer-parts>
+    <part id="1">
+        <name>Monitor</name>
+        <price>450</price>
+    </part>
+    <part id="2">
+        <name>RAM</name>
+        <price>200</price>
+    </part>
+    <part id="3">
+        <name>CPU</name>
+        <price>700</price>
+    </part>
+    <part id="4">
+        <name>GPU</name>
+        <price>1000</price>
+    </part>
+    <part id="5">
+        <name>Zasilacz</name>
+        <price>300</price>
+    </part>
+</computer-parts>

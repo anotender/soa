@@ -1,0 +1,7 @@
+Zalogowanie się http://localhost:8080/zad1/
+login/pass  matnow/123456
+login/pass  jankow/qwerty
+
+Aktywni użytkownicy http://localhost:8080/zad1/active-users.jsp
+
+Paragraf http://localhost:8080/zad1/paragraph.jsp

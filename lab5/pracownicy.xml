@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pracownicy>
+    <pracownik id="1">
+        <okresZatrudnienia>P5Y</okresZatrudnienia>
+        <email>email@email.com</email>
+    </pracownik>
+    <pracownik id="2">
+        <okresZatrudnienia>bezterminowo</okresZatrudnienia>
+        <email>email@email.com</email>
+        <podwladni idRef="1"/>
+    </pracownik>
+</pracownicy>
