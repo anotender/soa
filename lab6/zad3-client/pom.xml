@@ -6,23 +6,29 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>zad3</artifactId>
+    <artifactId>zad3-client</artifactId>
     <packaging>war</packaging>
-    <name>zad3 Maven Webapp</name>
-    <url>http://maven.apache.org</url>
+
     <dependencies>
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>7.0</version>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-ejb-client-bom</artifactId>
+            <version>10.1.0.Final</version>
+            <type>pom</type>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>pl.edu.agh.soa</groupId>
+            <artifactId>zad3-ejb</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
+
     <build>
-        <finalName>zad3</finalName>
+        <finalName>zad3-client</finalName>
     </build>
 </project>

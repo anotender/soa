@@ -1,8 +1,10 @@
-package pl.edu.agh.soa.lab6.zad3;
+package pl.edu.agh.soa.lab6.zad3.ejb;
 
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
 @Stateless
+@Remote(Converter.class)
 public class ConverterImpl implements Converter {
     public double fahr2Cels(double temp) {
         return (5 * (temp - 32)) / 9;
