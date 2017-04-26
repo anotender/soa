@@ -1,0 +1,12 @@
+<library>
+    <books>
+        <author>Jan Kowalski</author>
+        <title>Tytul</title>
+        <isbn>123456</isbn>
+    </books>
+    <books>
+        <author>Mateusz Nowak</author>
+        <title>Nowa Ksiazka</title>
+        <isbn>654321</isbn>
+    </books>
+</library>

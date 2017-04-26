@@ -11,6 +11,7 @@
     <modules>
         <module>zad3-client</module>
         <module>zad3-ejb</module>
+        <module>zad4-ejb</module>
     </modules>
 
 </project>

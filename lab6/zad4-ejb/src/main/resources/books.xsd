@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="library" type="library"/>
+    <xs:complexType name="library">
+        <xs:sequence>
+            <xs:element name="books" type="book" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="book">
+        <xs:all>
+            <xs:element name="author" type="xs:string"/>
+            <xs:element name="title" type="xs:string"/>
+            <xs:element name="isbn" type="xs:string"/>
+        </xs:all>
+    </xs:complexType>
+</xs:schema>
