@@ -1,5 +1,6 @@
 package pl.edu.agh.soa.lab6.zad4;
 
+import pl.edu.agh.soa.lab6.zad4.exception.BookAlreadyBorrowedException;
 import pl.edu.agh.soa.lab6.zad4.exception.BookAlreadyReservedException;
 import pl.edu.agh.soa.lab6.zad4.exception.BookNotFoundException;
 import pl.edu.agh.soa.lab6.zad4.model.Book;
@@ -18,6 +19,8 @@ import java.util.List;
 public class Library {
 
     private LibraryService libraryService;
+    private String pesel;
+    private String message;
 
     @PostConstruct
     public void init() {
@@ -32,14 +35,44 @@ public class Library {
         return libraryService.getBooks();
     }
 
-    public void reserveBook(String isbn){
+    public void reserveBook(String isbn) {
         try {
-            libraryService.reserveBook(isbn,"123");
-        } catch (BookNotFoundException e) {
-            e.printStackTrace();
-        } catch (BookAlreadyReservedException e) {
-            e.printStackTrace();
+            libraryService.reserveBook(isbn, pesel);
+        } catch (BookNotFoundException | BookAlreadyReservedException e) {
+            message = e.getMessage();
         }
+    }
+
+    public void borrowBook(String isbn) {
+        try {
+            libraryService.borrowBook(isbn, pesel);
+        } catch (BookNotFoundException | BookAlreadyReservedException | BookAlreadyBorrowedException e) {
+            message = e.getMessage();
+        }
+    }
+
+    public void returnBook(String isbn) {
+        try {
+            libraryService.returnBook(isbn);
+        } catch (BookNotFoundException e) {
+            message = e.getMessage();
+        }
+    }
+
+    public String getPesel() {
+        return pesel;
+    }
+
+    public void setPesel(String pesel) {
+        this.pesel = pesel;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     private LibraryService lookupRemoteLibraryService() throws NamingException {

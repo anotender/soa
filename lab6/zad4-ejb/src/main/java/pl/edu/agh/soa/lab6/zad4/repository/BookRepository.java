@@ -23,8 +23,8 @@ public class BookRepository {
 
     @PostConstruct
     void init() {
-        String xmlFileName = System.getProperty("jboss.server.config.dir") + "/books.xml";
-        String schemaFileName = System.getProperty("jboss.server.config.dir") + "/books.xsd";
+        String xmlFileName = System.getProperty("jboss.server.data.dir") + "/library/books.xml";
+        String schemaFileName = System.getProperty("jboss.server.data.dir") + "/library/books.xsd";
 
         try {
             SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);

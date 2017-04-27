@@ -37,12 +37,12 @@ public class LibraryServiceImpl implements LibraryService {
     public void reserveBook(String isbn, String pesel) throws BookNotFoundException, BookAlreadyReservedException {
         Book book = bookRepository
                 .findOneByIsbn(isbn)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(BookNotFoundException::new);
 
         if (isEmpty(book.getReservedBy()))
             book.setReservedBy(pesel);
         else
-            throw new RuntimeException();
+            throw new BookAlreadyReservedException();
     }
 
     public void returnBook(String isbn) throws BookNotFoundException {
@@ -50,7 +50,9 @@ public class LibraryServiceImpl implements LibraryService {
                 .findOneByIsbn(isbn)
                 .orElseThrow(BookNotFoundException::new);
 
-        book.setBorrowedBy("");
+        if (!isEmpty(book.getBorrowedBy())) {
+            book.setBorrowedBy("");
+        }
     }
 
     public List<Book> getBooks() {
