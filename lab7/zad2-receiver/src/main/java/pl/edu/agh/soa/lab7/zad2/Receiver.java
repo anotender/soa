@@ -1,12 +1,12 @@
 package pl.edu.agh.soa.lab7.zad2;
 
 import javax.ejb.ActivationConfigProperty;
+import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
 import javax.faces.bean.ManagedBean;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
-import java.util.LinkedList;
 import java.util.List;
 
 @ManagedBean
@@ -19,31 +19,20 @@ import java.util.List;
 )
 public class Receiver implements MessageListener {
 
-    private List<String> firms = new LinkedList<>();
-
-    public Receiver() {
-        System.out.println("new Receiver()");
-        firms.add("name1");
-        firms.add("name2");
-    }
+    @EJB
+    private FirmService firmService;
 
     public void onMessage(Message message) {
         TextMessage textMessage = (TextMessage) message;
         try {
-            firms.add(textMessage.getText());
             System.out.println("Received: " + textMessage.getText());
-            System.out.println(firms.size());
-            firms.forEach(System.out::println);
+            firmService.save(textMessage.getText());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public List<String> getFirms() {
-        return firms;
-    }
-
-    public void setFirms(List<String> firms) {
-        this.firms = firms;
+        return firmService.findAll();
     }
 }
