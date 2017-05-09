@@ -7,7 +7,7 @@ import java.util.List;
 @Local
 public interface TopicService {
 
-    void save(String topic);
+    void save(String topic) throws JMSException;
 
     List<String> findAll();
 

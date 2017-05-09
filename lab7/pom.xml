@@ -12,6 +12,7 @@
         <module>zad2-sender</module>
         <module>zad2-receiver</module>
         <module>zad1-publisher</module>
+        <module>zad1-subscriber</module>
     </modules>
 
 </project>

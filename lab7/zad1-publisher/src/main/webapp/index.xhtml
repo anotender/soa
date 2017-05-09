@@ -11,10 +11,10 @@
     <h:form>
         <h:panelGroup>
             <h:panelGrid columns="2">
-                <h:inputText id="topicName" value="#{publisher.topicName}" required="true"
+                <h:inputText id="newTopicName" value="#{publisher.newTopicName}" required="true"
                              requiredMessage="Provide topic name"/>
                 <h:commandButton value="Register" action="#{publisher.addTopic()}"/>
-                <h:message for="topicName" style="color: red"/>
+                <h:message for="newTopicName" style="color: red"/>
             </h:panelGrid>
         </h:panelGroup>
         <table>

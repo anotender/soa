@@ -2,6 +2,7 @@ package pl.edu.agh.soa.lab7.zad1;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.jms.JMSException;
 import java.util.List;
 
 @ManagedBean
@@ -9,28 +10,43 @@ public class Publisher {
     @EJB
     private TopicService topicService;
 
-    private String topicName;
+    private String newTopicName;
     private String message;
 
     public void addTopic() {
-        System.out.println("works...");
-        topicService.save(topicName);
+        try {
+            topicService.save(newTopicName);
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
     }
 
     public void sendMessage(String topic) {
-        topicService.sendMessage(topic, message);
+        try {
+            topicService.sendMessage(topic, message);
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<String> getTopics() {
         return topicService.findAll();
     }
 
-    public String getTopicName() {
-        return topicName;
+    public String getNewTopicName() {
+        return newTopicName;
     }
 
-    public void setTopicName(String topicName) {
-        this.topicName = topicName;
+    public void setNewTopicName(String newTopicName) {
+        this.newTopicName = newTopicName;
+    }
+
+    public TopicService getTopicService() {
+        return topicService;
+    }
+
+    public void setTopicService(TopicService topicService) {
+        this.topicService = topicService;
     }
 
     public String getMessage() {
