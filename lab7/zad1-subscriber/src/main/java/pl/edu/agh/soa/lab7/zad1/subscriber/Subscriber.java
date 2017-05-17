@@ -1,9 +1,13 @@
 package pl.edu.agh.soa.lab7.zad1.subscriber;
 
 import javax.annotation.Resource;
+import javax.faces.bean.ManagedBean;
 import javax.jms.*;
 
+@ManagedBean
 public class Subscriber {
+
+    private String name;
 
     @Resource(mappedName = "java:/ConnectionFactory")
     private ConnectionFactory cf;
@@ -11,35 +15,28 @@ public class Subscriber {
     @Resource(mappedName = "java:/jms/topic/lab7-zad1-topic")
     private Topic jmsTopic;
 
-    public void registerSubscriber(String name) {
-        Connection con = null;
+    public void registerSubscriber() {
+        System.out.println("Registering consumer: " + name);
+
+        Connection con;
         try {
             con = cf.createConnection();
             Session session = con.createSession(false, Session.AUTO_ACKNOWLEDGE);
+
             MessageConsumer consumer = session.createConsumer(jmsTopic);
-
-            consumer.setMessageListener(m -> {
-                MapMessage mapMessage = (MapMessage) m;
-                try {
-                    String topic = mapMessage.getString("topic");
-                    String message = mapMessage.getString("message");
-
-                    System.out.println("Received by " + name + ": " + topic + " -> " + message);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
+            consumer.setMessageListener(new CustomMessageListener(name));
 
             con.start();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (JMSException ignored) {
-                }
-            }
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

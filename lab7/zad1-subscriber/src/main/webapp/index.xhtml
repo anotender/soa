@@ -8,8 +8,8 @@
 </h:head>
 <h:body>
     <h:form>
-        <h:inputText value="#{subscriber.userName}"/>
-        <h:commandButton value="Save" type="submit"/>
+        <h:inputText value="#{subscriber.name}"/>
+        <h:commandButton value="Save" action="#{subscriber.registerSubscriber()}"/>
     </h:form>
 </h:body>
 </html>
