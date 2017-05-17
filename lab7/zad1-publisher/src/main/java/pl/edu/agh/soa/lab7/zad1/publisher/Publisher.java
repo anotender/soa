@@ -1,4 +1,4 @@
-package pl.edu.agh.soa.lab7.zad1;
+package pl.edu.agh.soa.lab7.zad1.publisher;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -14,11 +14,7 @@ public class Publisher {
     private String message;
 
     public void addTopic() {
-        try {
-            topicService.save(newTopicName);
-        } catch (JMSException e) {
-            e.printStackTrace();
-        }
+        topicService.save(newTopicName);
     }
 
     public void sendMessage(String topic) {

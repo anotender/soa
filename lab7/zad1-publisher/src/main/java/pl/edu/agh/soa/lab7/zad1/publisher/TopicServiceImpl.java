@@ -1,12 +1,9 @@
-package pl.edu.agh.soa.lab7.zad1;
+package pl.edu.agh.soa.lab7.zad1.publisher;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.jms.*;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Stateless
 public class TopicServiceImpl implements TopicService {
@@ -14,13 +11,13 @@ public class TopicServiceImpl implements TopicService {
     @Resource(mappedName = "java:/ConnectionFactory")
     private ConnectionFactory cf;
 
-    @Resource(mappedName = "java:/jms/queue/lab7-zad1-queue")
-    private Queue queue;
+    @Resource(mappedName = "java:/jms/topic/lab7-zad1-topic")
+    private Topic jmsTopic;
 
-    private Map<String, List<String>> topics = new HashMap<>();
+    private Map<String, Set<String>> topics = new HashMap<>();
 
     public void save(String topic) {
-        topics.put(topic, new LinkedList<>());
+        topics.put(topic, new HashSet<>());
     }
 
     public List<String> findAll() {
@@ -32,17 +29,17 @@ public class TopicServiceImpl implements TopicService {
         try {
             con = cf.createConnection();
             Session session = con.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            MessageProducer publisher = session.createProducer(queue);
+            MessageProducer publisher = session.createProducer(jmsTopic);
 
             con.start();
 
             MapMessage mapMessage = session.createMapMessage();
             mapMessage.setString("topic", topic);
             mapMessage.setString("message", message);
-            mapMessage.setObject("subscribers", topics.get(topic));
 
             publisher.send(mapMessage);
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (con != null) {
                 try {
