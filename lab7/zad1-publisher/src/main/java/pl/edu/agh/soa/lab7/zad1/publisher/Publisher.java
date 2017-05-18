@@ -12,17 +12,14 @@ public class Publisher {
 
     private String newTopicName;
     private String message;
+    private String subscribers;
 
     public void addTopic() {
         topicService.save(newTopicName);
     }
 
-    public void sendMessage(String topic) {
-        try {
-            topicService.sendMessage(topic, message);
-        } catch (JMSException e) {
-            e.printStackTrace();
-        }
+    public void sendMessage(String topic) throws JMSException {
+        topicService.sendMessage(topic, message, subscribers);
     }
 
     public List<String> getTopics() {
@@ -51,5 +48,13 @@ public class Publisher {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(String subscribers) {
+        this.subscribers = subscribers;
     }
 }

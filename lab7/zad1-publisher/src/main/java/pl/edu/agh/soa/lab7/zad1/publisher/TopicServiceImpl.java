@@ -24,7 +24,7 @@ public class TopicServiceImpl implements TopicService {
         return new LinkedList<>(topics.keySet());
     }
 
-    public void sendMessage(String topic, String message) throws JMSException {
+    public void sendMessage(String topic, String message, String subscribers) throws JMSException {
         Connection con = null;
         try {
             con = cf.createConnection();
@@ -36,6 +36,7 @@ public class TopicServiceImpl implements TopicService {
             MapMessage mapMessage = session.createMapMessage();
             mapMessage.setString("topic", topic);
             mapMessage.setString("message", message);
+            mapMessage.setString("subscribers", subscribers);
 
             publisher.send(mapMessage);
         } catch (Exception e) {

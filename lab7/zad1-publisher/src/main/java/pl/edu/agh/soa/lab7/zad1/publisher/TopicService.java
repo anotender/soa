@@ -11,6 +11,6 @@ public interface TopicService {
 
     List<String> findAll();
 
-    void sendMessage(String topic, String message) throws JMSException;
+    void sendMessage(String topic, String message, String subscribers) throws JMSException;
 
 }

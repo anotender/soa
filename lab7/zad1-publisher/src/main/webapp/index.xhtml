@@ -18,11 +18,19 @@
             </h:panelGrid>
         </h:panelGroup>
         <table>
+            <thead>
+            <tr>
+                <th>Topic</th>
+                <th>Message</th>
+                <th>Users(comma separeted list)</th>
+            </tr>
+            </thead>
             <tbody>
             <ui:repeat value="#{publisher.topics}" var="topic">
                 <tr>
                     <td>#{topic}</td>
                     <td><h:inputText value="#{publisher.message}"/></td>
+                    <td><h:inputText value="#{publisher.subscribers}"/></td>
                     <td><h:commandButton value="Send" action="#{publisher.sendMessage(topic)}"/></td>
                 </tr>
             </ui:repeat>
