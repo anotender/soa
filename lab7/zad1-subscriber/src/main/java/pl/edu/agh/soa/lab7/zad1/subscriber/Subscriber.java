@@ -15,21 +15,17 @@ public class Subscriber {
     @Resource(mappedName = "java:/jms/topic/lab7-zad1-topic")
     private Topic jmsTopic;
 
-    public void registerSubscriber() {
+    public void registerSubscriber() throws Exception{
         System.out.println("Registering consumer: " + name);
 
-        Connection con;
-        try {
-            con = cf.createConnection();
-            Session session = con.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        Connection connection = cf.createConnection();
 
-            MessageConsumer consumer = session.createConsumer(jmsTopic);
-            consumer.setMessageListener(new CustomMessageListener(name));
+        connection
+                .createSession(false, Session.AUTO_ACKNOWLEDGE)
+                .createConsumer(jmsTopic)
+                .setMessageListener(new CustomMessageListener(name));
 
-            con.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        connection.start();
     }
 
     public String getName() {

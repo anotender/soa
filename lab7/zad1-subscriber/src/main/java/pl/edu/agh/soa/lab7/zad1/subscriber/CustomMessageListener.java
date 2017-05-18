@@ -4,9 +4,6 @@ import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 
-/**
- * Created by matnow on 5/17/17.
- */
 public class CustomMessageListener implements MessageListener {
 
     private String name;
