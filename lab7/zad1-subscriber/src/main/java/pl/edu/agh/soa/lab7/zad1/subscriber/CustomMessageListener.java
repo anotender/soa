@@ -21,16 +21,18 @@ public class CustomMessageListener implements MessageListener {
             String message = mapMessage.getString("message");
             String subscribers = mapMessage.getString("subscribers");
 
-            boolean shouldReceiveMessage = isEmpty(subscribers) || Arrays
-                    .stream(subscribers.split(","))
-                    .anyMatch(s -> s.equals(name));
-
-            if (shouldReceiveMessage) {
+            if (shouldReceiveMessage(subscribers)) {
                 System.out.println("Received by " + name + ": " + topic + " -> " + message);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean shouldReceiveMessage(String subscribers) {
+        return isEmpty(subscribers) || Arrays
+                .stream(subscribers.split(","))
+                .anyMatch(s -> s.equals(name));
     }
 
     private boolean isEmpty(String s) {
