@@ -13,22 +13,31 @@
             <tr>
                 <th>ISBN</th>
                 <th>Title</th>
-                <th>Author</th>
+                <th>First name</th>
+                <th>Last name</th>
                 <th>Year</th>
                 <th>Price</th>
             </tr>
             </thead>
             <tbody>
+            <tr>
+                <td><h:inputText value="#{bookController.newBook.isbn}"/></td>
+                <td><h:inputText value="#{bookController.newBook.title}"/></td>
+                <td><h:inputText value="#{bookController.newBook.authorFirstName}"/></td>
+                <td><h:inputText value="#{bookController.newBook.authorLastName}"/></td>
+                <td><h:inputText value="#{bookController.newBook.year}"/></td>
+                <td><h:inputText value="#{bookController.newBook.price}"/></td>
+                <td><h:commandButton value="Save" action="#{bookController.save()}"/></td>
+            </tr>
             <ui:repeat value="#{bookController.getBooks()}" var="book">
                 <tr>
-                    <td><h:outputText value="#{book.isbn}"/></td>
-                    <td><h:outputText value="#{book.title}"/></td>
-                    <td>
-                        <h:outputText value="#{book.authorFirstName}"/> <h:outputText value="#{book.authorLastName}"/>
-                    </td>
-                    <td><h:outputText value="#{book.year}"/></td>
-                    <td><h:outputText value="#{book.price}"/></td>
-                    <td><h:commandButton value="Edit" action="#{bookController.update()}"/></td>
+                    <td><h:inputText value="#{book.isbn}"/></td>
+                    <td><h:inputText value="#{book.title}"/></td>
+                    <td><h:inputText value="#{book.authorFirstName}"/></td>
+                    <td><h:inputText value="#{book.authorLastName}"/></td>
+                    <td><h:inputText value="#{book.year}"/></td>
+                    <td><h:inputText value="#{book.price}"/></td>
+                    <td><h:commandButton value="Edit" action="#{bookController.update(book)}"/></td>
                     <td><h:commandButton value="Delete" action="#{bookController.delete(book.id)}"/></td>
                 </tr>
             </ui:repeat>

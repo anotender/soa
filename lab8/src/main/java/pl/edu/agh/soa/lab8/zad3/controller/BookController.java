@@ -13,15 +13,30 @@ public class BookController {
     @EJB
     private BookRepository bookRepository;
 
+    private Book newBook = new Book();
+
     public List<Book> getBooks() {
         return bookRepository.findAll();
     }
 
-    public void update() {
+    public void save() {
+        bookRepository.save(newBook);
+        newBook = new Book();
     }
 
-    public void delete(long id){
+    public void update(Book book) {
+        bookRepository.update(book.getId(), book);
+    }
+
+    public void delete(long id) {
         bookRepository.delete(id);
     }
 
+    public Book getNewBook() {
+        return newBook;
+    }
+
+    public void setNewBook(Book newBook) {
+        this.newBook = newBook;
+    }
 }

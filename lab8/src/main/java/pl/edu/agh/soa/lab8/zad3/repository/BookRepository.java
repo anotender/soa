@@ -18,21 +18,18 @@ public class BookRepository {
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     public List<Book> findAll() {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+        Session session = getSessionAndBeginTransaction();
 
         List<Book> books = (List<Book>) session
                 .createQuery("from pl.edu.agh.soa.lab8.zad3.model.Book")
                 .list();
 
-        session.getTransaction().commit();
-        session.close();
+        commitTransactionAndCloseSession(session);
         return books;
     }
 
     public Optional<Book> findOne(long id) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+        Session session = getSessionAndBeginTransaction();
 
         Object result = session
                 .createQuery("" +
@@ -41,8 +38,7 @@ public class BookRepository {
                 )
                 .uniqueResult();
 
-        session.getTransaction().commit();
-        session.close();
+        commitTransactionAndCloseSession(session);
 
         if (Objects.isNull(result)) {
             return Optional.empty();
@@ -51,28 +47,43 @@ public class BookRepository {
     }
 
     public void save(Book b) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+        Session session = getSessionAndBeginTransaction();
 
         session.save(b);
 
-        session.getTransaction().commit();
-        session.close();
+        commitTransactionAndCloseSession(session);
     }
 
-    public void update(long id, Book b) {
-        throw new UnsupportedOperationException();
+    public void update(long id, Book newBook) {
+        findOne(id).ifPresent(oldBook -> {
+            Session session = getSessionAndBeginTransaction();
+
+            newBook.setId(oldBook.getId());
+            session.update(newBook);
+
+            commitTransactionAndCloseSession(session);
+
+        });
     }
 
     public void delete(long id) {
         findOne(id).ifPresent(b -> {
-            Session session = sessionFactory.openSession();
-            session.beginTransaction();
+            Session session = getSessionAndBeginTransaction();
 
             session.delete(b);
 
-            session.getTransaction().commit();
-            session.close();
+            commitTransactionAndCloseSession(session);
         });
+    }
+
+    private Session getSessionAndBeginTransaction() {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        return session;
+    }
+
+    private void commitTransactionAndCloseSession(Session session) {
+        session.getTransaction().commit();
+        session.close();
     }
 }
