@@ -14,13 +14,16 @@ public class ParkingPlace {
     @Id
     @GeneratedValue(strategy = AUTO)
     @Column(name = "pp_id")
-    private long id;
+    private Long id;
 
     @NotNull
     @Column(name = "pp_occupied")
-    private boolean occupied;
+    private Boolean occupied;
 
     @ManyToOne
     @JoinColumn(name = "st_id")
     private Street street;
+
+    @OneToOne(mappedBy = "parkingPlace")
+    private Ticket ticket;
 }
