@@ -14,13 +14,19 @@ public class BookController {
     private BookRepository bookRepository;
 
     private Book newBook = new Book();
+    private String message;
 
     public List<Book> getBooks() {
         return bookRepository.findAll();
     }
 
     public void save() {
-        bookRepository.save(newBook);
+        try {
+            bookRepository.save(newBook);
+        } catch (Exception e) {
+            e.printStackTrace();
+            setMessage("Book with such ISBN or title already exists!");
+        }
         newBook = new Book();
     }
 
@@ -38,5 +44,13 @@ public class BookController {
 
     public void setNewBook(Book newBook) {
         this.newBook = newBook;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
