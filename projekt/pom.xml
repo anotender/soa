@@ -11,6 +11,7 @@
     <modules>
         <module>parking-meter-mock</module>
         <module>parking-place-mock</module>
+        <module>parking-area-service</module>
     </modules>
 
     <dependencies>
