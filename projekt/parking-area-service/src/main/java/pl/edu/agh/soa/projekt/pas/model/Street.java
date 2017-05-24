@@ -22,7 +22,7 @@ public class Street {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "ar_id")
+    @JoinColumn(name = "st_area_id")
     private Area area;
 
     @OneToMany(mappedBy = "street")

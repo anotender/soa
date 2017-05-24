@@ -17,7 +17,7 @@ public class ParkingMeter {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "st_id")
+    @JoinColumn(name = "pm_street_id")
     private Street street;
 
     @OneToMany(mappedBy = "parkingMeter")

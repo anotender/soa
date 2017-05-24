@@ -25,6 +25,6 @@ public class User {
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "ar_id")
+    @JoinColumn(name = "us_area_id")
     private Area area;
 }

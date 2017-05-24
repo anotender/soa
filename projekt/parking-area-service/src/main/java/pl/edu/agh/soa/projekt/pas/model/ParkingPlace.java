@@ -21,7 +21,7 @@ public class ParkingPlace {
     private Boolean occupied;
 
     @ManyToOne
-    @JoinColumn(name = "st_id")
+    @JoinColumn(name = "pp_street_id")
     private Street street;
 
     @OneToOne(mappedBy = "parkingPlace")

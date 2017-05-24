@@ -18,7 +18,7 @@ public class ParkingPlaceRepository {
 
     public List<ParkingPlace> findAll() {
         return (List<ParkingPlace>) em
-                .createQuery("from ParkingPlace")
+                .createQuery("from ParkingPlace order by id")
                 .getResultList();
     }
 

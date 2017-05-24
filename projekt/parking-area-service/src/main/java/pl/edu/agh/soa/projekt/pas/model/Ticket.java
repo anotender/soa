@@ -22,10 +22,10 @@ public class Ticket {
     private Date expirationTime;
 
     @ManyToOne
-    @JoinColumn(name = "pm_id")
+    @JoinColumn(name = "tk_parking_meter_id")
     private ParkingMeter parkingMeter;
 
     @OneToOne
-    @JoinColumn(name = "pp_id")
+    @JoinColumn(name = "tk_parking_place_id")
     private ParkingPlace parkingPlace;
 }

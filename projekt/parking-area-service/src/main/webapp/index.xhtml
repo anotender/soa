@@ -13,6 +13,7 @@
             <thead>
             <tr>
                 <th>ID</th>
+                <th>Area</th>
                 <th>Street</th>
                 <th>Occupied</th>
             </tr>
@@ -21,6 +22,7 @@
             <ui:repeat value="#{dashboardController.getParkingPlaces()}" var="p">
                 <tr>
                     <td><h:outputText value="#{p.id}"/></td>
+                    <td><h:outputText value="#{p.street.area.name}"/></td>
                     <td><h:outputText value="#{p.street.name}"/></td>
                     <td><h:outputText value="#{p.occupied}"/></td>
                 </tr>
