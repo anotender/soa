@@ -31,7 +31,12 @@ public class BookController {
     }
 
     public void update(Book book) {
-        bookRepository.update(book.getId(), book);
+        try {
+            bookRepository.update(book.getId(), book);
+        } catch (Exception e) {
+            e.printStackTrace();
+            setMessage("Book with such ISBN or title already exists!");
+        }
     }
 
     public void delete(long id) {
