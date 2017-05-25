@@ -7,30 +7,32 @@
 <h:head>
 </h:head>
 <h:body>
-    <h:form>
-        <h:outputText value="#{bookController.message}" style="color: red"/>
-        <table border="1">
-            <thead>
+    <h:outputText value="#{bookController.message}" style="color: red"/>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Year</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <h:form>
             <tr>
-                <th>ISBN</th>
-                <th>Title</th>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Year</th>
-                <th>Price</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td><h:inputText value="#{bookController.newBook.isbn}"/></td>
-                <td><h:inputText value="#{bookController.newBook.title}"/></td>
-                <td><h:inputText value="#{bookController.newBook.authorFirstName}"/></td>
-                <td><h:inputText value="#{bookController.newBook.authorLastName}"/></td>
-                <td><h:inputText value="#{bookController.newBook.year}"/></td>
-                <td><h:inputText value="#{bookController.newBook.price}"/></td>
+                <td><h:inputText value="#{bookController.newBook.isbn}" required="true"/></td>
+                <td><h:inputText value="#{bookController.newBook.title}" required="true"/></td>
+                <td><h:inputText value="#{bookController.newBook.authorFirstName}" required="true"/></td>
+                <td><h:inputText value="#{bookController.newBook.authorLastName}" required="true"/></td>
+                <td><h:inputText value="#{bookController.newBook.year}" required="true"/></td>
+                <td><h:inputText value="#{bookController.newBook.price}" required="true"/></td>
                 <td><h:commandButton value="Save" action="#{bookController.save()}"/></td>
             </tr>
-            <ui:repeat value="#{bookController.getBooks()}" var="book">
+        </h:form>
+        <ui:repeat value="#{bookController.getBooks()}" var="book">
+            <h:form>
                 <tr>
                     <td><h:inputText value="#{book.isbn}"/></td>
                     <td><h:inputText value="#{book.title}"/></td>
@@ -41,9 +43,9 @@
                     <td><h:commandButton value="Edit" action="#{bookController.update(book)}"/></td>
                     <td><h:commandButton value="Delete" action="#{bookController.delete(book.id)}"/></td>
                 </tr>
-            </ui:repeat>
-            </tbody>
-        </table>
-    </h:form>
+            </h:form>
+        </ui:repeat>
+        </tbody>
+    </table>
 </h:body>
 </html>
