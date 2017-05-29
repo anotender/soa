@@ -5,7 +5,17 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:outputLabel value="Hello, world"/>
-</f:view>
+<h:head>
+</h:head>
+<h:body>
+    <h:outputText value="#{currencyController.result}"/>
+    <h:form>
+        <h:inputText value="#{currencyController.currency}"/>
+        <h:inputText value="#{currencyController.value}"/>
+        <br/>
+        <br/>
+        <h:commandButton value="Check currency" action="#{currencyController.checkCurrencyExchangeRate()}"/>
+        <h:commandButton value="Exchange" action="#{currencyController.getExchange()}"/>
+    </h:form>
+</h:body>
 </html>

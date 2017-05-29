@@ -9,6 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>zad2-service</artifactId>
+    <packaging>war</packaging>
 
     <build>
         <finalName>zad2-service</finalName>
