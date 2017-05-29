@@ -18,4 +18,7 @@ public class DashboardController {
         return parkingPlaceRepository.findAll();
     }
 
+    public boolean isOccupiedWithoutTicket(ParkingPlace p) {
+        return p.isOccupied() && p.getTicket() == null;
+    }
 }

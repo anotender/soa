@@ -18,7 +18,7 @@ INSERT INTO parking_place (pp_id, pp_occupied, pp_street_id) VALUES (4, FALSE, 2
 INSERT INTO parking_place (pp_id, pp_occupied, pp_street_id) VALUES (5, FALSE, 2);
 INSERT INTO parking_place (pp_id, pp_occupied, pp_street_id) VALUES (6, FALSE, 2);
 INSERT INTO parking_place (pp_id, pp_occupied, pp_street_id) VALUES (7, FALSE, 3);
-INSERT INTO parking_place (pp_id, pp_occupied, pp_street_id) VALUES (8, FALSE, 4);
+INSERT INTO parking_place (pp_id, pp_occupied, pp_street_id) VALUES (8, FALSE, 3);
 
 INSERT INTO app_user (us_id, us_password, us_user_name, us_area_id) VALUES (1, 'qwerty', 'user1', 1);
 INSERT INTO app_user (us_id, us_password, us_user_name, us_area_id) VALUES (2, '12345', 'user2', 2);

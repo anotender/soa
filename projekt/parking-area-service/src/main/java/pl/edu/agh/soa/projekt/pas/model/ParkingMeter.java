@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.List;
 
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.AUTO;
 
 @Data
@@ -16,7 +17,7 @@ public class ParkingMeter {
     @Column(name = "pm_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "pm_street_id")
     private Street street;
 

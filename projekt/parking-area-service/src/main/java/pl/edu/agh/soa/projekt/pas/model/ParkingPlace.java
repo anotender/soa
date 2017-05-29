@@ -18,7 +18,7 @@ public class ParkingPlace {
 
     @NotNull
     @Column(name = "pp_occupied")
-    private Boolean occupied;
+    private boolean occupied;
 
     @ManyToOne
     @JoinColumn(name = "pp_street_id")

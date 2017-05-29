@@ -25,6 +25,7 @@ public class ParkingPlaceServiceImpl implements ParkingPlaceService {
                 .findOne(id)
                 .map(p -> {
                     p.setOccupied(occupied);
+                    p.setTicket(null);
                     return p;
                 })
                 .ifPresent(p -> parkingPlaceRepository.update(id, p));

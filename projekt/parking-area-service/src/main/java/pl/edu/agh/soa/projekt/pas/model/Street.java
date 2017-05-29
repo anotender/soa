@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.AUTO;
 
 @Data
@@ -25,7 +26,7 @@ public class Street {
     @JoinColumn(name = "st_area_id")
     private Area area;
 
-    @OneToMany(mappedBy = "street")
+    @OneToMany(mappedBy = "street", fetch = EAGER)
     private List<ParkingPlace> parkingPlaces;
 
     @OneToMany(mappedBy = "street")

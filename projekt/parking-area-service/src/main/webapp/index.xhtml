@@ -2,8 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
->
+      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
     <h:outputStylesheet library="webjars" name="bootstrap/3.3.6/css/bootstrap.min-jsf.css"/>
 </h:head>
@@ -16,15 +15,17 @@
                 <th>Area</th>
                 <th>Street</th>
                 <th>Occupied</th>
+                <th>Ticket expiration time</th>
             </tr>
             </thead>
             <tbody>
             <ui:repeat value="#{dashboardController.getParkingPlaces()}" var="p">
-                <tr>
+                <tr class="#{dashboardController.isOccupiedWithoutTicket(p) ? 'danger':''}">
                     <td><h:outputText value="#{p.id}"/></td>
                     <td><h:outputText value="#{p.street.area.name}"/></td>
                     <td><h:outputText value="#{p.street.name}"/></td>
                     <td><h:outputText value="#{p.occupied}"/></td>
+                    <td><h:outputText value="#{p.ticket.expirationTime}"/></td>
                 </tr>
             </ui:repeat>
             </tbody>

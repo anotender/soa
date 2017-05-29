@@ -1,19 +1,19 @@
 package pl.edu.agh.soa.projekt.pas.service.soap.impl;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.WebEndpoint;
 import javax.xml.ws.WebServiceClient;
 import javax.xml.ws.WebServiceException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 @WebServiceClient(
         name = "ParkingPlaceServiceImplService",
         targetNamespace = "http://impl.soap.service.pas.projekt.soa.agh.edu.pl/",
         wsdlLocation = "http://localhost:8080/parking-area-service/ParkingPlaceServiceImpl?wsdl"
 )
-public class ParkingPlaceServiceImplService extends Service {
+public class ParkingPlaceServiceProxy extends Service {
 
     private final static URL PARKING_PLACE_SERVICE_IMPL_SERVICE_WSDL_LOCATION;
     private final static WebServiceException PARKING_PLACE_SERVICE_IMPL_SERVICE_EXCEPTION;
@@ -31,7 +31,7 @@ public class ParkingPlaceServiceImplService extends Service {
         PARKING_PLACE_SERVICE_IMPL_SERVICE_EXCEPTION = e;
     }
 
-    public ParkingPlaceServiceImplService() {
+    public ParkingPlaceServiceProxy() {
         super(getWsdlLocation(), PARKING_PLACE_SERVICE_IMPL_SERVICE_QNAME);
     }
 

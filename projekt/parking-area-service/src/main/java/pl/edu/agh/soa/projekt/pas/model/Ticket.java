@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.AUTO;
 
 @Data
@@ -21,7 +22,7 @@ public class Ticket {
     @Column(name = "tk_exp_time")
     private Date expirationTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "tk_parking_meter_id")
     private ParkingMeter parkingMeter;
 
