@@ -13,6 +13,8 @@
         <module>zad1-client</module>
         <module>zad2-service</module>
         <module>zad2-client</module>
+        <module>zad3-service</module>
+        <module>zad3-client</module>
     </modules>
 
 </project>
