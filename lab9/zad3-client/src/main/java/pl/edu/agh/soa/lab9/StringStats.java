@@ -1,10 +1,8 @@
-
 package pl.edu.agh.soa.lab9;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for stringStats complex type.
@@ -39,11 +37,11 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class StringStats {
 
-    protected long charCount;
-    protected long digitCount;
-    protected long lowerCaseLettersCount;
-    protected long upperCaseLettersCount;
-    protected long whiteSpacesCount;
+    private long charCount;
+    private long digitCount;
+    private long lowerCaseLettersCount;
+    private long upperCaseLettersCount;
+    private long whiteSpacesCount;
 
     /**
      * Gets the value of the charCount property.

@@ -29,41 +29,9 @@ public class StringServiceImplService
         super(__getWsdlLocation(), STRING_SERVICE_IMPL_QNAME);
     }
 
-    public StringServiceImplService(WebServiceFeature... features) {
-        super(__getWsdlLocation(), STRING_SERVICE_IMPL_QNAME, features);
-    }
-
-    public StringServiceImplService(URL wsdlLocation) {
-        super(wsdlLocation, STRING_SERVICE_IMPL_QNAME);
-    }
-
-    public StringServiceImplService(URL wsdlLocation, WebServiceFeature... features) {
-        super(wsdlLocation, STRING_SERVICE_IMPL_QNAME, features);
-    }
-
-    public StringServiceImplService(URL wsdlLocation, QName serviceName) {
-        super(wsdlLocation, serviceName);
-    }
-
-    public StringServiceImplService(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
-        super(wsdlLocation, serviceName, features);
-    }
-
-    /**
-     * @return returns StringService
-     */
     @WebEndpoint(name = "StringServiceImplPort")
     public StringService getStringServiceImplPort() {
         return super.getPort(new QName("http://lab9.soa.agh.edu.pl/", "StringServiceImplPort"), StringService.class);
-    }
-
-    /**
-     * @param features A list of {@link javax.xml.ws.WebServiceFeature} to configure on the proxy.  Supported features not in the <code>features</code> parameter will have their default values.
-     * @return returns StringService
-     */
-    @WebEndpoint(name = "StringServiceImplPort")
-    public StringService getStringServiceImplPort(WebServiceFeature... features) {
-        return super.getPort(new QName("http://lab9.soa.agh.edu.pl/", "StringServiceImplPort"), StringService.class, features);
     }
 
     private static URL __getWsdlLocation() {
