@@ -1,7 +1,7 @@
 package pl.edu.agh.soa.projekt.pas.service.detector;
 
+import pl.edu.agh.soa.projekt.pas.model.ParkingPlace;
 import pl.edu.agh.soa.projekt.pas.service.parkingplace.ParkingPlaceService;
-import pl.edu.agh.soa.projekt.pas.util.ParkingAreaUtils;
 
 import javax.ejb.EJB;
 import javax.ejb.Lock;
@@ -9,6 +9,8 @@ import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 
 import static javax.ejb.LockType.READ;
+import static pl.edu.agh.soa.projekt.pas.util.ParkingAreaUtils.hasExpiredTicket;
+import static pl.edu.agh.soa.projekt.pas.util.ParkingAreaUtils.hasNoTicket;
 
 @Singleton
 public class IllegalStateDetector {
@@ -22,9 +24,9 @@ public class IllegalStateDetector {
         parkingPlaceService
                 .getParkingPlaces()
                 .stream()
-                .filter(ParkingAreaUtils::isOccupiedWithoutTicket)
-                .forEach(parkingPlace -> System.out.println(parkingPlace.getId()));
+                .filter(ParkingPlace::isOccupied)
+                .filter(p -> hasNoTicket(p) || hasExpiredTicket(p))
+                .forEach(p -> System.out.println(p.getId()));
     }
-
 
 }

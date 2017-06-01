@@ -2,8 +2,7 @@ $(function () {
     $('#getTicketButton').click(function () {
         var parkingMeterId = $('#parkingMeterId').val();
         var minutes = $('#minutes').val();
-        var expirationTime = new Date($.now());
-        expirationTime.setMinutes(expirationTime.getMinutes() + minutes);
+        var expirationTime = new Date().getTime() + minutes * 60 * 1000;
         var url = "http://localhost:8080/parking-area-service/rest/ticket";
         var data = {
             'expirationTime': expirationTime,
