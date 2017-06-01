@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import static javax.persistence.FetchType.EAGER;
@@ -20,7 +21,7 @@ public class Ticket {
 
     @NotNull
     @Column(name = "tk_exp_time")
-    private Date expirationTime;
+    private LocalDateTime expirationTime;
 
     @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "tk_parking_meter_id")

@@ -26,10 +26,7 @@ public class ParkingPlaceRepository {
         return Optional.ofNullable(em.find(ParkingPlace.class, id));
     }
 
-    public void update(long id, ParkingPlace newPlace) {
-        findOne(id).ifPresent(oldPlace -> {
-            newPlace.setId(oldPlace.getId());
-            em.merge(newPlace);
-        });
+    public void update(ParkingPlace parkingPlace) {
+        em.merge(parkingPlace);
     }
 }

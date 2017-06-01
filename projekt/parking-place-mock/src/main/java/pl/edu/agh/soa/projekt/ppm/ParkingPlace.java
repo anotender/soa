@@ -1,13 +1,13 @@
 package pl.edu.agh.soa.projekt.ppm;
 
-import pl.edu.agh.soa.projekt.pas.service.soap.impl.ParkingPlaceService;
-import pl.edu.agh.soa.projekt.pas.service.soap.impl.ParkingPlaceServiceProxy;
+import pl.edu.agh.soa.projekt.pas.service.parkingplace.soap.impl.ParkingPlaceSOAPService;
+import pl.edu.agh.soa.projekt.pas.service.parkingplace.soap.impl.ParkingPlaceSOAPServiceProxy;
 
 import javax.faces.bean.ManagedBean;
 
 @ManagedBean
 public class ParkingPlace {
-    private ParkingPlaceService parkingPlaceService = getParkingPlaceService();
+    private ParkingPlaceSOAPService parkingPlaceService = getParkingPlaceService();
     private long parkingPlaceId;
 
     public void take() {
@@ -26,7 +26,7 @@ public class ParkingPlace {
         this.parkingPlaceId = parkingPlaceId;
     }
 
-    private ParkingPlaceService getParkingPlaceService() {
-        return new ParkingPlaceServiceProxy().getParkingPlaceServiceImplPort();
+    private ParkingPlaceSOAPService getParkingPlaceService() {
+        return new ParkingPlaceSOAPServiceProxy().getParkingPlaceSOAPServiceImplPort();
     }
 }

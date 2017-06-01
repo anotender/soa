@@ -1,4 +1,4 @@
-package pl.edu.agh.soa.projekt.pas.service.soap.api;
+package pl.edu.agh.soa.projekt.pas.service.parkingplace.soap.api;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -8,7 +8,7 @@ import static javax.jws.soap.SOAPBinding.Style.RPC;
 
 @WebService
 @SOAPBinding(style = RPC)
-public interface ParkingPlaceService {
+public interface ParkingPlaceSOAPService {
 
     @WebMethod
     void takePlace(long id);
