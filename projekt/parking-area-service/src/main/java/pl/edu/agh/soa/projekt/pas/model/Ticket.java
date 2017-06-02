@@ -13,7 +13,7 @@ import static javax.persistence.GenerationType.AUTO;
 @Table(name = "ticket")
 public class Ticket {
     @Id
-    @GeneratedValue(strategy = AUTO)
+    @GeneratedValue
     @Column(name = "tk_id")
     private Long id;
 
@@ -21,7 +21,7 @@ public class Ticket {
     @Column(name = "tk_exp_time")
     private Long expirationTime;
 
-    @ManyToOne(fetch = EAGER)
+    @ManyToOne
     @JoinColumn(name = "tk_parking_meter_id")
     private ParkingMeter parkingMeter;
 

@@ -13,11 +13,11 @@ import static javax.persistence.GenerationType.AUTO;
 @Table(name = "parking_meter")
 public class ParkingMeter {
     @Id
-    @GeneratedValue(strategy = AUTO)
+    @GeneratedValue
     @Column(name = "pm_id")
     private Long id;
 
-    @ManyToOne(fetch = EAGER)
+    @ManyToOne
     @JoinColumn(name = "pm_street_id")
     private Street street;
 

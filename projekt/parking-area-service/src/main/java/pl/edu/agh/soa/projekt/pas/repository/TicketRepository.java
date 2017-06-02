@@ -6,13 +6,11 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Singleton
 @Startup
-@Transactional
 public class TicketRepository {
     @PersistenceContext(unitName = "projekt-pu")
     private EntityManager em;
@@ -27,14 +25,15 @@ public class TicketRepository {
                 .getResultList();
     }
 
-    public void save(Ticket ticket) {
-        em.persist(ticket);
+    public void save(Ticket t) {
+        em.persist(t);
     }
 
-    public void update(long id, Ticket newTicket) {
-        findOne(id).ifPresent(oldTicket -> {
-            newTicket.setId(oldTicket.getId());
-            em.merge(newTicket);
-        });
+    public void update(Ticket t) {
+        em.merge(t);
+    }
+
+    public void delete(Ticket t) {
+        em.remove(t);
     }
 }

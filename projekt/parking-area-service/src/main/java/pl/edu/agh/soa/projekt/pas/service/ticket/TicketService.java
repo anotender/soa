@@ -7,12 +7,14 @@ import pl.edu.agh.soa.projekt.pas.repository.TicketRepository;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 @Singleton
 @Startup
+@Transactional
 public class TicketService {
     @EJB
     private TicketRepository ticketRepository;
@@ -21,8 +23,16 @@ public class TicketService {
         return ticketRepository.findAll();
     }
 
-    public void saveTicket(Ticket ticket) {
-        ticketRepository.save(ticket);
+    public void saveTicket(Ticket t) {
+        ticketRepository.save(t);
+    }
+
+    public void updateTicket(Ticket t) {
+        ticketRepository.update(t);
+    }
+
+    public void deleteTicket(Ticket t) {
+        ticketRepository.delete(t);
     }
 
     public void bindTicketWithParkingPlace(Long ticketId) {
@@ -37,7 +47,7 @@ public class TicketService {
 
         findOccupiedParkingPlaceWithoutTicket(parkingPlaces).ifPresent(parkingPlace -> {
             ticket.setParkingPlace(parkingPlace);
-            ticketRepository.update(ticketId, ticket);
+            updateTicket(ticket);
         });
     }
 

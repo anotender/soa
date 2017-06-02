@@ -12,7 +12,7 @@ import static javax.persistence.GenerationType.AUTO;
 @Table(name = "app_user")
 public class User {
     @Id
-    @GeneratedValue(strategy = AUTO)
+    @GeneratedValue
     @Column(name = "us_id")
     private Long id;
 

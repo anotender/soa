@@ -14,7 +14,7 @@ import static javax.persistence.GenerationType.AUTO;
 @Table(name = "street")
 public class Street {
     @Id
-    @GeneratedValue(strategy = AUTO)
+    @GeneratedValue
     @Column(name = "st_id")
     private Long id;
 
@@ -26,7 +26,7 @@ public class Street {
     @JoinColumn(name = "st_area_id")
     private Area area;
 
-    @OneToMany(mappedBy = "street", fetch = EAGER)
+    @OneToMany(mappedBy = "street")
     private List<ParkingPlace> parkingPlaces;
 
     @OneToMany(mappedBy = "street")
