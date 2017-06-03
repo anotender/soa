@@ -15,7 +15,7 @@ public class ParkingAreaUtils {
         return isTicketExpired(p.getTicket());
     }
 
-    private static boolean isTicketExpired(Ticket t) {
+    public static boolean isTicketExpired(Ticket t) {
         return t.getExpirationTime() < System.currentTimeMillis();
     }
 

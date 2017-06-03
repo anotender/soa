@@ -1,32 +1,53 @@
 package pl.edu.agh.soa.projekt.pas.service.detector;
 
-import pl.edu.agh.soa.projekt.pas.model.ParkingPlace;
-import pl.edu.agh.soa.projekt.pas.service.parkingplace.ParkingPlaceService;
+import pl.edu.agh.soa.projekt.pas.model.Ticket;
+import pl.edu.agh.soa.projekt.pas.service.ticket.TicketService;
 
 import javax.ejb.EJB;
-import javax.ejb.Lock;
-import javax.ejb.Schedule;
 import javax.ejb.Singleton;
-
-import static javax.ejb.LockType.READ;
-import static pl.edu.agh.soa.projekt.pas.util.ParkingAreaUtils.hasExpiredTicket;
-import static pl.edu.agh.soa.projekt.pas.util.ParkingAreaUtils.hasNoTicket;
+import javax.ejb.Startup;
+import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 @Singleton
+@Startup
 public class IllegalStateDetector {
 
     @EJB
-    private ParkingPlaceService parkingPlaceService;
+    private TicketService ticketService;
 
-    @Lock(READ)
-    @Schedule(second = "*/30", minute = "*", hour = "*", persistent = false)
-    public void detectIllegalState() {
-        parkingPlaceService
-                .getParkingPlaces()
-                .stream()
-                .filter(ParkingPlace::isOccupied)
-                .filter(p -> hasNoTicket(p) || hasExpiredTicket(p))
-                .forEach(p -> System.out.println(p.getId()));
+    private Ticket ticketToExpire;
+
+    public void registerTicket(Ticket ticket) {
+        if (Objects.isNull(ticketToExpire) || expiresEarlier(ticket)) {
+            ticketToExpire = ticket;
+            Executors
+                    .newSingleThreadScheduledExecutor()
+                    .schedule(
+                            new NotificationHandler(),
+                            ticketToExpire.getExpirationTime() - System.currentTimeMillis(),
+                            TimeUnit.MILLISECONDS
+                    );
+        }
+    }
+
+    private void unregisterTicket() {
+        ticketToExpire = null;
+    }
+
+    private boolean expiresEarlier(Ticket ticket) {
+        return ticket.getExpirationTime() < ticketToExpire.getExpirationTime();
+    }
+
+    private class NotificationHandler implements Runnable {
+        @Override
+        public void run() {
+            System.out.println("executed...");
+            /*unregisterTicket();
+            Ticket ticket = ticketService.getFirstTicketToExpire();
+            registerTicket(ticket);*/
+        }
     }
 
 }

@@ -26,7 +26,6 @@ public class TicketController {
     @Consumes(APPLICATION_JSON)
     public void saveTicket(Ticket ticket) {
         ticketService.saveTicket(ticket);
-        ticketService.bindTicketWithParkingPlace(ticket.getId());
     }
 
 }
