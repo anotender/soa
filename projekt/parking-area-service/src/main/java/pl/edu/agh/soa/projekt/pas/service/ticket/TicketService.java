@@ -1,12 +1,11 @@
 package pl.edu.agh.soa.projekt.pas.service.ticket;
 
 import pl.edu.agh.soa.projekt.pas.model.ParkingPlace;
-import pl.edu.agh.soa.projekt.pas.model.Street;
 import pl.edu.agh.soa.projekt.pas.model.Ticket;
 import pl.edu.agh.soa.projekt.pas.repository.StreetRepository;
 import pl.edu.agh.soa.projekt.pas.repository.TicketRepository;
 import pl.edu.agh.soa.projekt.pas.service.detector.IllegalStateDetector;
-import pl.edu.agh.soa.projekt.pas.util.ParkingAreaUtils;
+import pl.edu.agh.soa.projekt.pas.util.TicketUtils;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -51,7 +50,7 @@ public class TicketService {
     public Ticket getFirstTicketToExpire() {
         return getTickets()
                 .stream()
-                .filter(ParkingAreaUtils::isTicketExpired)
+                .filter(TicketUtils::isNotExpired)
                 .sorted(Comparator.comparing(Ticket::getExpirationTime))
                 .findFirst()
                 .orElseThrow(RuntimeException::new);

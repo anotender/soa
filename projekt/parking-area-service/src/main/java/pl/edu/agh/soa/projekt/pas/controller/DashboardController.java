@@ -7,8 +7,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import java.util.List;
 
-import static pl.edu.agh.soa.projekt.pas.util.ParkingAreaUtils.hasExpiredTicket;
-import static pl.edu.agh.soa.projekt.pas.util.ParkingAreaUtils.hasNoTicket;
+import static pl.edu.agh.soa.projekt.pas.util.ParkingPlaceUtils.hasExpiredTicket;
+import static pl.edu.agh.soa.projekt.pas.util.ParkingPlaceUtils.hasNoTicket;
 
 @ManagedBean
 public class DashboardController {
