@@ -19,6 +19,9 @@ public class IllegalStateDetector {
     @EJB
     private TicketService ticketService;
 
+    @EJB
+    private NotificationHandler notificationHandler;
+
     private Ticket ticketToExpire;
 
     public void registerTicket(Ticket ticket) {
@@ -30,7 +33,7 @@ public class IllegalStateDetector {
                             Executors
                                     .newSingleThreadScheduledExecutor()
                                     .schedule(
-                                            new NotificationHandler(),
+                                            () -> notificationHandler.notifyUsers(ticketToExpire.getParkingPlace().getId()),
                                             ticketToExpire.getExpirationTime() - System.currentTimeMillis(),
                                             TimeUnit.MILLISECONDS
                                     )

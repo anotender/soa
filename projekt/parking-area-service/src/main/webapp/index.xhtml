@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:b="http://bootsfaces.net/ui">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:b="http://bootsfaces.net/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
 </h:head>
 <h:body>
     <b:container>
         <b:dataTable value="#{dashboardController.getParkingPlaces()}" var="p">
-            <b:dataTableColumn value="#{p.id}" label="ID"/>
-            <b:dataTableColumn value="#{p.street.area.name}" label="Area"/>
-            <b:dataTableColumn value="#{p.street.name}" label="Street"/>
-            <b:dataTableColumn value="#{p.ticket.expirationTime}" label="Expiration time"/>
+            <c:set value="#{dashboardController.getContentStyle(p)}" var="cs"/>
+            <b:dataTableColumn value="#{p.id}" label="ID" contentStyle="#{cs}"/>
+            <b:dataTableColumn value="#{p.street.area.name}" label="Area" contentStyle="#{cs}"/>
+            <b:dataTableColumn value="#{p.street.name}" label="Street" contentStyle="#{cs}"/>
+            <b:dataTableColumn value="#{p.occupied}" label="Occupied" contentStyle="#{cs}"/>
+            <b:dataTableColumn value="#{dashboardController.getFormattedTime(p.ticket.expirationTime)}"
+                               label="Expiration time" contentStyle="#{cs}"/>
         </b:dataTable>
     </b:container>
 </h:body>
