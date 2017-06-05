@@ -15,6 +15,13 @@ public class TicketController {
     private TicketService ticketService;
 
     @GET
+    @Path("/{id}")
+    @Produces(APPLICATION_JSON)
+    public Ticket getTicket(@PathParam("id") Long id) {
+        return ticketService.getTicket(id);
+    }
+
+    @GET
     @Path("/")
     @Produces(APPLICATION_JSON)
     public List<Ticket> getTickets() {
@@ -26,6 +33,19 @@ public class TicketController {
     @Consumes(APPLICATION_JSON)
     public void saveTicket(Ticket ticket) {
         ticketService.saveTicket(ticket);
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes(APPLICATION_JSON)
+    public void updateTicket(@PathParam("id") Long id, Ticket ticket) {
+        throw new UnsupportedOperationException("Ticket cannot be modified");
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void deleteTicket(@PathParam("id") Long id) {
+        ticketService.deleteTicket(id);
     }
 
 }

@@ -6,6 +6,11 @@
 <h:head>
 </h:head>
 <h:body>
+    <b:navBar static="true">
+        <b:navbarLinks pull="right">
+            <b:navLink value="Logout" href="#"/>
+        </b:navbarLinks>
+    </b:navBar>
     <b:container>
         <b:dataTable value="#{dashboardController.getParkingPlaces()}" var="p">
             <c:set value="#{dashboardController.getContentStyle(p)}" var="cs"/>

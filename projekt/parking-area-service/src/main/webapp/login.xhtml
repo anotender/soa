@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+<h:head>
+    <style type="text/css">
+        .form-signin {
+            margin: 0 auto;
+            max-width: 330px;
+            padding: 15px;
+        }
+    </style>
+</h:head>
+<h:body style="padding-top: 60px;">
+    <b:container>
+        <h:form styleClass="form-signin" prependId="false">
+            <b:inputText placeholder="Username" value="#{securityController.username}" required="true">
+                <f:facet name="prepend">
+                    <b:icon name="user"/>
+                </f:facet>
+            </b:inputText>
+            <b:inputText placeholder="Password" type="password" value="#{securityController.password}" required="true">
+                <f:facet name="prepend">
+                    <b:iconAwesome name="key"/>
+                </f:facet>
+            </b:inputText>
+            <b:commandButton look="primary btn-block" value="Login" icon="log-in" size="lg"
+                             action="#{securityController.login()}"/>
+        </h:form>
+    </b:container>
+</h:body>
+</html>

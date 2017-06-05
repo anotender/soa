@@ -5,8 +5,6 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import static javax.persistence.GenerationType.AUTO;
-
 @Data
 @Entity
 @Table(name = "app_user")
@@ -17,12 +15,16 @@ public class User {
     private Long id;
 
     @NotNull
-    @Column(name = "us_user_name")
-    private String userName;
+    @Column(name = "us_username")
+    private String username;
 
     @NotNull
     @Column(name = "us_password")
     private String password;
+
+    @NotNull
+    @Column(name = "us_role")
+    private String role;
 
     @ManyToOne
     @JoinColumn(name = "us_area_id")

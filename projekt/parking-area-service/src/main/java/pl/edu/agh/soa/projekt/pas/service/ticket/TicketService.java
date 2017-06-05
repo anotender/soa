@@ -29,6 +29,12 @@ public class TicketService {
     @EJB
     private IllegalStateDetector illegalStateDetector;
 
+    public Ticket getTicket(Long id) {
+        return ticketRepository
+                .findOne(id)
+                .orElseThrow(RuntimeException::new);
+    }
+
     public List<Ticket> getTickets() {
         return ticketRepository.findAll();
     }
@@ -45,6 +51,10 @@ public class TicketService {
 
     public void deleteTicket(Ticket t) {
         ticketRepository.delete(t);
+    }
+
+    public void deleteTicket(Long id) {
+        deleteTicket(getTicket(id));
     }
 
     public Ticket getFirstTicketToExpire() {
