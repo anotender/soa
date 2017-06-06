@@ -13,6 +13,10 @@
 </h:head>
 <h:body style="padding-top: 60px;">
     <b:container>
+        <b:alert severity="danger" colMd="4" offsetMd="4" style="margin-top: 10px;" closable="true"
+                 rendered="#{securityController.isNotEmpty(securityController.message)}">
+            <h:outputText value="#{securityController.message}"/>
+        </b:alert>
         <h:form styleClass="form-signin" prependId="false">
             <b:inputText placeholder="Username" value="#{securityController.username}" required="true">
                 <f:facet name="prepend">

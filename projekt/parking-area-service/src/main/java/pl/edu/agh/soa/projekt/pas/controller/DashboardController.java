@@ -2,11 +2,13 @@ package pl.edu.agh.soa.projekt.pas.controller;
 
 import pl.edu.agh.soa.projekt.pas.model.ParkingPlace;
 import pl.edu.agh.soa.projekt.pas.service.parkingplace.ParkingPlaceService;
+import pl.edu.agh.soa.projekt.pas.util.SecurityUtils;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -18,6 +20,7 @@ import static pl.edu.agh.soa.projekt.pas.util.ParkingPlaceUtils.hasExpiredTicket
 import static pl.edu.agh.soa.projekt.pas.util.ParkingPlaceUtils.hasNoTicket;
 
 @ManagedBean
+@SessionScoped
 @MessageDriven(
         name = "DashboardController",
         activationConfig = {
@@ -43,6 +46,10 @@ public class DashboardController implements MessageListener {
 
     public String getContentStyle(ParkingPlace p) {
         return hasIllegalState(p) ? "color:red" : "";
+    }
+
+    public boolean isAuthenticated() {
+        return SecurityUtils.getLoggedUser().isPresent();
     }
 
     private boolean hasIllegalState(ParkingPlace p) {
