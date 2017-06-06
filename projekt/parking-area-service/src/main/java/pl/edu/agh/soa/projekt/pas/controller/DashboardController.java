@@ -33,7 +33,7 @@ public class DashboardController implements MessageListener {
     private ParkingPlaceService parkingPlaceService;
 
     public List<ParkingPlace> getParkingPlaces() {
-        return parkingPlaceService.getParkingPlaces();
+        return parkingPlaceService.getParkingPlacesForLoggedUser();
     }
 
     public String getFormattedTime(long time) {

@@ -26,7 +26,8 @@ public class User {
 
     @NotNull
     @Column(name = "us_role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @ManyToOne
     @JoinColumn(name = "us_area_id")

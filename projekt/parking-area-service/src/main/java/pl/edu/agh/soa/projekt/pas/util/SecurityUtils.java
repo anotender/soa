@@ -1,5 +1,6 @@
 package pl.edu.agh.soa.projekt.pas.util;
 
+import pl.edu.agh.soa.projekt.pas.model.Role;
 import pl.edu.agh.soa.projekt.pas.model.User;
 
 import javax.faces.context.FacesContext;
@@ -29,6 +30,14 @@ public class SecurityUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean isAdmin() {
+        return isAdmin(getLoggedUser().orElseThrow(RuntimeException::new));
+    }
+
+    public static boolean isAdmin(User u) {
+        return u.getRole().equals(Role.ADMIN);
     }
 
     private static HttpServletRequest getRequest() {

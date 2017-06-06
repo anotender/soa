@@ -38,11 +38,7 @@ public class PasswordController {
     }
 
     public boolean isAdmin() {
-        return SecurityUtils
-                .getLoggedUser()
-                .orElseThrow(IllegalStateException::new)
-                .getRole()
-                .equals("admin");
+        return SecurityUtils.isAdmin();
     }
 
     public String getUsername() {

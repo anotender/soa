@@ -1,14 +1,14 @@
 package pl.edu.agh.soa.projekt.pas.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-import static javax.persistence.GenerationType.AUTO;
-
 @Data
+@EqualsAndHashCode(exclude = {"id", "users", "streets"})
 @Entity
 @Table(name = "area")
 public class Area {
@@ -18,7 +18,7 @@ public class Area {
     private Long id;
 
     @NotNull
-    @Column(name = "ar_name")
+    @Column(name = "ar_name", unique = true)
     private String name;
 
     @OneToMany(mappedBy = "area")

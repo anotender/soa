@@ -12,14 +12,7 @@
         </b:alert>
     </ui:fragment>
     <ui:fragment rendered="#{securityController.isAuthenticated()}">
-        <b:navBar static="true">
-            <h:form>
-                <b:navbarLinks pull="right">
-                    <b:navLink value="Change password" outcome="password"/>
-                    <b:navCommandLink value="Logout" action="#{securityController.logout()}"/>
-                </b:navbarLinks>
-            </h:form>
-        </b:navBar>
+        <ui:include src="navbar.xhtml"/>
         <b:container>
             <b:dataTable value="#{dashboardController.getParkingPlaces()}" var="p">
                 <c:set value="#{dashboardController.getContentStyle(p)}" var="cs"/>
