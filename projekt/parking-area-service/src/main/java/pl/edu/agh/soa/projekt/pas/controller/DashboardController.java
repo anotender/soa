@@ -2,7 +2,6 @@ package pl.edu.agh.soa.projekt.pas.controller;
 
 import pl.edu.agh.soa.projekt.pas.model.ParkingPlace;
 import pl.edu.agh.soa.projekt.pas.service.parkingplace.ParkingPlaceService;
-import pl.edu.agh.soa.projekt.pas.util.SecurityUtils;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
@@ -46,10 +45,6 @@ public class DashboardController implements MessageListener {
 
     public String getContentStyle(ParkingPlace p) {
         return hasIllegalState(p) ? "color:red" : "";
-    }
-
-    public boolean isAuthenticated() {
-        return SecurityUtils.getLoggedUser().isPresent();
     }
 
     private boolean hasIllegalState(ParkingPlace p) {

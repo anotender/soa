@@ -1,12 +1,11 @@
 package pl.edu.agh.soa.projekt.pas.controller;
 
 import pl.edu.agh.soa.projekt.pas.service.security.SecurityService;
+import pl.edu.agh.soa.projekt.pas.util.SecurityUtils;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import java.io.IOException;
 
 @ManagedBean
 @SessionScoped
@@ -22,7 +21,7 @@ public class SecurityController {
     public void login() {
         try {
             securityService.login(username, password);
-            redirect("index.xhtml");
+            SecurityUtils.redirect("index.xhtml");
         } catch (Exception e) {
             message = e.getMessage();
         }
@@ -30,7 +29,11 @@ public class SecurityController {
 
     public void logout() {
         securityService.logout();
-        redirect("login.xhtml");
+        SecurityUtils.redirect("login.xhtml");
+    }
+
+    public boolean isAuthenticated() {
+        return SecurityUtils.getLoggedUser().isPresent();
     }
 
     public boolean isNotEmpty(String s) {
@@ -59,16 +62,5 @@ public class SecurityController {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    private void redirect(String page) {
-        try {
-            FacesContext
-                    .getCurrentInstance()
-                    .getExternalContext()
-                    .redirect(page);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

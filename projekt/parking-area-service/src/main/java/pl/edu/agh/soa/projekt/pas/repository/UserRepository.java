@@ -26,4 +26,8 @@ public class UserRepository {
             return Optional.empty();
         }
     }
+
+    public void update(User u) {
+        em.merge(u);
+    }
 }

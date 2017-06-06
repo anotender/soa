@@ -1,5 +1,6 @@
 package pl.edu.agh.soa.projekt.pas.service.security;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import pl.edu.agh.soa.projekt.pas.exception.InvalidCredentialsException;
 import pl.edu.agh.soa.projekt.pas.exception.SessionAlreadyExistsException;
 import pl.edu.agh.soa.projekt.pas.model.User;
@@ -26,8 +27,8 @@ public class SecurityService {
     public void login(String userName, String password) throws InvalidCredentialsException, SessionAlreadyExistsException {
         User user = userService.getUser(userName);
 
-        if (!user.getPassword().equals(password)) {
-            throw new InvalidCredentialsException("Invalid username or password");
+        if (!DigestUtils.sha256Hex(password).equals(user.getPassword())) {
+            throw new InvalidCredentialsException();
         }
 
         HttpSession session = SecurityUtils.getSession();

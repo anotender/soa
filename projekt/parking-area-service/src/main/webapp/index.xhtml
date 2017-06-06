@@ -6,15 +6,16 @@
 <h:head>
 </h:head>
 <h:body>
-    <ui:fragment rendered="#{not dashboardController.isAuthenticated()}">
+    <ui:fragment rendered="#{not securityController.isAuthenticated()}">
         <b:alert severity="danger" colMd="4" offsetMd="4" style="margin-top: 10px;">
             You must <h:link value="login" outcome="login"/> to access that page
         </b:alert>
     </ui:fragment>
-    <ui:fragment rendered="#{dashboardController.isAuthenticated()}">
+    <ui:fragment rendered="#{securityController.isAuthenticated()}">
         <b:navBar static="true">
             <h:form>
                 <b:navbarLinks pull="right">
+                    <b:navLink value="Change password" outcome="password"/>
                     <b:navCommandLink value="Logout" action="#{securityController.logout()}"/>
                 </b:navbarLinks>
             </h:form>
