@@ -1,11 +1,13 @@
 package pl.edu.agh.soa.projekt.pas.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Data
+@EqualsAndHashCode(exclude = {"id", "password", "role", "area"})
 @Entity
 @Table(name = "app_user")
 public class User {
@@ -15,7 +17,7 @@ public class User {
     private Long id;
 
     @NotNull
-    @Column(name = "us_username")
+    @Column(name = "us_username", unique = true)
     private String username;
 
     @NotNull
