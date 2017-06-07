@@ -14,9 +14,6 @@ public class CatRepository {
     private final List<Cat> cats = new LinkedList<>();
 
     public List<Cat> findAll() {
-        Cat c = new Cat();
-        c.setName("name");
-        cats.add(c);
         return cats;
     }
 
@@ -36,4 +33,8 @@ public class CatRepository {
         cats.remove(cat);
     }
 
+    public void update(String id, Cat cat) {
+        remove(id);
+        cats.add(cat);
+    }
 }

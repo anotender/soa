@@ -29,7 +29,7 @@ public class CatController {
     public Response getCat(@PathParam("id") String id) {
         return catRepository
                 .findOne(id)
-                .map(cat1 -> Response.ok(cat1).build())
+                .map(c -> Response.ok(c).build())
                 .orElseGet(() -> Response.status(NOT_FOUND).build());
     }
 
@@ -45,6 +45,11 @@ public class CatController {
     @Path("/{id}")
     @Consumes(APPLICATION_JSON)
     public Response updateCat(@PathParam("id") String id, Cat cat) {
+        if (!catRepository.findOne(id).isPresent()) {
+            return Response.status(NOT_FOUND).build();
+        }
+        cat.setId(id);
+        catRepository.update(id, cat);
         return Response.ok().build();
     }
 
