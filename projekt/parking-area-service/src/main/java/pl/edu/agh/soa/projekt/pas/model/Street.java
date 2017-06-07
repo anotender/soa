@@ -6,9 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-import static javax.persistence.FetchType.EAGER;
-import static javax.persistence.GenerationType.AUTO;
-
 @Data
 @Entity
 @Table(name = "street")

@@ -10,7 +10,9 @@ import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -32,9 +34,13 @@ public class ParkingPlaceService {
     }
 
     public List<ParkingPlace> getParkingPlacesForLoggedUser() {
-        User user = SecurityUtils
-                .getLoggedUser()
-                .orElseThrow(RuntimeException::new);
+        Optional<User> userOptional = SecurityUtils.getLoggedUser();
+
+        if (!userOptional.isPresent()) {
+            return Collections.emptyList();
+        }
+
+        User user = userOptional.get();
 
         if (SecurityUtils.isAdmin(user)) {
             return getParkingPlaces();

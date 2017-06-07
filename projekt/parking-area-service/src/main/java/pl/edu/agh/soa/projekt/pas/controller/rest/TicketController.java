@@ -35,13 +35,6 @@ public class TicketController {
         ticketService.saveTicket(ticket);
     }
 
-    @PUT
-    @Path("/{id}")
-    @Consumes(APPLICATION_JSON)
-    public void updateTicket(@PathParam("id") Long id, Ticket ticket) {
-        throw new UnsupportedOperationException("Ticket cannot be modified");
-    }
-
     @DELETE
     @Path("/{id}")
     public void deleteTicket(@PathParam("id") Long id) {
