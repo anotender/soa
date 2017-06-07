@@ -7,9 +7,14 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 @WebFilter(urlPatterns = {"/*"})
 public class WebBrowserFilter implements Filter {
+
+    private static final List<String> EXCLUDED_PATHS = Arrays.asList("rest", "ParkingPlaceSOAPServiceImpl");
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -18,14 +23,9 @@ public class WebBrowserFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
+        String path = request.getRequestURI();
 
-        boolean isChrome = Browser
-                .parseUserAgentString(request.getHeader("User-Agent"))
-                .getName()
-                .toLowerCase()
-                .contains("chrome");
-
-        if (isChrome) {
+        if (isExcludedPath(path) || isChrome(request.getHeader("User-Agent"))) {
             chain.doFilter(req, resp);
         } else {
             response.getWriter().println("Your browser is not supported. Try Chrome.");
@@ -34,5 +34,19 @@ public class WebBrowserFilter implements Filter {
 
     @Override
     public void destroy() {
+    }
+
+    private boolean isChrome(String userAgent) {
+        return Browser
+                .parseUserAgentString(userAgent)
+                .getName()
+                .toLowerCase()
+                .contains("chrome");
+    }
+
+    private boolean isExcludedPath(String path) {
+        return EXCLUDED_PATHS
+                .stream()
+                .anyMatch(path::contains);
     }
 }

@@ -38,7 +38,7 @@ public class DashboardController implements MessageListener {
 
     public String getFormattedTime(long time) {
         if (time == 0) {
-            return "";
+            return "No ticket";
         }
         return new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date(time));
     }
