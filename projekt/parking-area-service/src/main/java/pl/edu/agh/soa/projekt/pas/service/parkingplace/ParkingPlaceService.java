@@ -1,6 +1,5 @@
 package pl.edu.agh.soa.projekt.pas.service.parkingplace;
 
-
 import pl.edu.agh.soa.projekt.pas.model.ParkingPlace;
 import pl.edu.agh.soa.projekt.pas.model.User;
 import pl.edu.agh.soa.projekt.pas.repository.ParkingPlaceRepository;

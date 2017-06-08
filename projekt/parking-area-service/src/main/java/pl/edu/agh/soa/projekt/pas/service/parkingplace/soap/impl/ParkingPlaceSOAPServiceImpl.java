@@ -1,8 +1,9 @@
 package pl.edu.agh.soa.projekt.pas.service.parkingplace.soap.impl;
 
+import pl.edu.agh.soa.projekt.pas.model.HistoricEvent;
 import pl.edu.agh.soa.projekt.pas.model.ParkingPlace;
 import pl.edu.agh.soa.projekt.pas.model.Ticket;
-import pl.edu.agh.soa.projekt.pas.repository.TicketRepository;
+import pl.edu.agh.soa.projekt.pas.service.historicevent.HistoricEventService;
 import pl.edu.agh.soa.projekt.pas.service.parkingplace.ParkingPlaceService;
 import pl.edu.agh.soa.projekt.pas.service.parkingplace.soap.api.ParkingPlaceSOAPService;
 import pl.edu.agh.soa.projekt.pas.service.ticket.TicketService;
@@ -21,6 +22,9 @@ public class ParkingPlaceSOAPServiceImpl implements ParkingPlaceSOAPService {
     @EJB
     private TicketService ticketService;
 
+    @EJB
+    private HistoricEventService historicEventService;
+
     public void takePlace(long id) {
         changeParkingPlaceState(id, true);
     }
@@ -33,6 +37,13 @@ public class ParkingPlaceSOAPServiceImpl implements ParkingPlaceSOAPService {
     private void changeParkingPlaceState(long id, boolean occupied) {
         ParkingPlace parkingPlace = parkingPlaceService.getParkingPlace(id);
         Ticket ticket = parkingPlace.getTicket();
+
+        if (!occupied) {
+            HistoricEvent historicEvent = new HistoricEvent();
+            historicEvent.setParkingPlace(parkingPlace);
+            historicEvent.setTicket(ticket);
+            historicEventService.saveHistoricEvent(historicEvent);
+        }
 
         parkingPlace.setOccupied(occupied);
         parkingPlace.setTicket(null);

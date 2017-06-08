@@ -49,10 +49,6 @@ public class TicketService {
         ticketRepository.update(t);
     }
 
-    public void deleteTicket(Ticket t) {
-        ticketRepository.delete(t);
-    }
-
     public void deleteTicket(Long id) {
         deleteTicket(getTicket(id));
     }
@@ -63,6 +59,10 @@ public class TicketService {
                 .filter(TicketUtils::isNotExpired)
                 .sorted(Comparator.comparing(Ticket::getExpirationTime))
                 .findFirst();
+    }
+
+    private void deleteTicket(Ticket t) {
+        ticketRepository.delete(t);
     }
 
     private void bindTicketWithParkingPlace(Long ticketId) {

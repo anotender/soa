@@ -2,14 +2,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:b="http://bootsfaces.net/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
 </h:head>
 <h:body>
     <ui:include src="fragments/unauthorized.xhtml"/>
     <ui:fragment rendered="#{securityController.isAuthenticated()}">
         <ui:include src="fragments/navbar.xhtml"/>
-        <h:outputText value="Hello"/>
+        <b:container id="dashboard">
+            <b:dataTable value="#{reportController.getParkingPlacesPopularity().entrySet().toArray()}" var="e">
+                <c:set value="#{e.key}" var="k"/>
+                <c:set value="#{e.value}" var="v"/>
+                <b:dataTableColumn value="#{k.id}" label="ID"/>
+                <b:dataTableColumn value="#{k.street.area.name}" label="Area"/>
+                <b:dataTableColumn value="#{k.street.name}" label="Street"/>
+                <b:dataTableColumn value="#{v}" label="Popularity" order="desc"/>
+            </b:dataTable>
+        </b:container>
     </ui:fragment>
 </h:body>
 </html>
