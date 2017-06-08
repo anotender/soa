@@ -1,0 +1,7 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:b="http://bootsfaces.net/ui">
+    <b:alert severity="danger" colMd="4" offsetMd="4" style="margin-top: 10px;"
+             rendered="#{not securityController.isAuthenticated()}">
+        You must <h:link value="login" outcome="login"/> to access that page
+    </b:alert>
+</ui:composition>

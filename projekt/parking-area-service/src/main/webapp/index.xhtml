@@ -7,16 +7,12 @@
 <h:head>
 </h:head>
 <h:body>
-    <ui:fragment rendered="#{not securityController.isAuthenticated()}">
-        <b:alert severity="danger" colMd="4" offsetMd="4" style="margin-top: 10px;">
-            You must <h:link value="login" outcome="login"/> to access that page
-        </b:alert>
-    </ui:fragment>
+    <ui:include src="fragments/unauthorized.xhtml"/>
     <ui:fragment rendered="#{securityController.isAuthenticated()}">
         <h:form>
             <p:poll interval="30" update="dashboard"/>
         </h:form>
-        <ui:include src="navbar.xhtml"/>
+        <ui:include src="fragments/navbar.xhtml"/>
         <b:container id="dashboard">
             <b:dataTable value="#{dashboardController.getParkingPlaces()}" var="p">
                 <c:set value="#{dashboardController.getContentStyle(p)}" var="cs"/>
