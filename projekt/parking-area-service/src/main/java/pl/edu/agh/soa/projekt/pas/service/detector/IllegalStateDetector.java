@@ -44,7 +44,7 @@ public class IllegalStateDetector {
                     })
                     .thenRun(() -> {
                         ticketToExpire = null;
-                        registerTicket(ticketService.getFirstTicketToExpire());
+                        ticketService.getFirstTicketToExpire().ifPresent(this::registerTicket);
                     });
         }
     }

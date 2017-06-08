@@ -57,13 +57,12 @@ public class TicketService {
         deleteTicket(getTicket(id));
     }
 
-    public Ticket getFirstTicketToExpire() {
+    public Optional<Ticket> getFirstTicketToExpire() {
         return getTickets()
                 .stream()
                 .filter(TicketUtils::isNotExpired)
                 .sorted(Comparator.comparing(Ticket::getExpirationTime))
-                .findFirst()
-                .orElseThrow(RuntimeException::new);
+                .findFirst();
     }
 
     private void bindTicketWithParkingPlace(Long ticketId) {
