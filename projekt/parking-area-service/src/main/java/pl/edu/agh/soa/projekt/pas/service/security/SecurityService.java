@@ -34,8 +34,8 @@ public class SecurityService {
         HttpSession session = SecurityUtils.getSession();
         session.setAttribute("user", user);
 
-        if (!Objects.isNull(sessions.get(user))) {
-            throw new SessionAlreadyExistsException("Session already exists");
+        if (Objects.nonNull(sessions.get(user))) {
+            throw new SessionAlreadyExistsException();
         }
         sessions.put(user, session);
     }

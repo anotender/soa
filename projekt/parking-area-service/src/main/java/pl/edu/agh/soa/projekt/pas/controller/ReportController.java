@@ -16,4 +16,16 @@ public class ReportController {
     public Map<ParkingPlace, Long> getParkingPlacesPopularity() {
         return reportService.getParkingPlacesPopularity();
     }
+
+    public Map<Integer, Long> getDurationPopularity() {
+        return reportService.getDurationPopularity();
+    }
+
+    public double countAverageDuration() {
+        return reportService.countAverageDuration();
+    }
+
+    public long countParkingPlacesWithoutTicket() {
+        return reportService.countParkingPlacesWithoutTicket();
+    }
 }

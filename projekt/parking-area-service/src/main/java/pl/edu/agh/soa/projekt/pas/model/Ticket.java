@@ -5,9 +5,6 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import static javax.persistence.FetchType.EAGER;
-import static javax.persistence.GenerationType.AUTO;
-
 @Data
 @Entity
 @Table(name = "ticket")
@@ -20,6 +17,10 @@ public class Ticket {
     @NotNull
     @Column(name = "tk_exp_time")
     private Long expirationTime;
+
+    @NotNull
+    @Column(name = "tk_duration")
+    private Integer duration;
 
     @ManyToOne
     @JoinColumn(name = "tk_parking_meter_id")
