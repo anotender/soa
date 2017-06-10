@@ -7,7 +7,7 @@
 <h:head>
 </h:head>
 <h:body>
-    <ui:include src="fragments/unauthorized.xhtml"/>
+    <ui:include src="fragments/unauthenticated.xhtml"/>
     <ui:fragment rendered="#{securityController.isAuthenticated()}">
         <h:form>
             <p:poll interval="30" update="dashboard"/>

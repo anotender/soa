@@ -3,7 +3,7 @@
     <b:navBar static="true">
         <b:navbarLinks>
             <b:navLink value="Dashboard" outcome="index"/>
-            <b:navLink value="Report" outcome="report"/>
+            <b:navLink value="Report" outcome="report" rendered="#{securityController.isAdmin()}"/>
         </b:navbarLinks>
         <h:form>
             <b:navbarLinks pull="right">

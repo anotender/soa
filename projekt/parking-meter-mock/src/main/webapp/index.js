@@ -4,20 +4,20 @@ $(function () {
         var minutes = $('#minutes').val();
         var expirationTime = new Date().getTime() + minutes * 60 * 1000;
         var url = "http://localhost:8080/parking-area-service/rest/ticket";
-        var data = {
+        var data = JSON.stringify({
             'duration': minutes,
             'expirationTime': expirationTime,
             'parkingMeter': {
                 'id': parkingMeterId
             }
-        };
+        });
 
         $.ajax({
             type: 'POST',
             url: url,
             contentType: 'application/json',
             dataType: 'json',
-            data: JSON.stringify(data)
+            data: data
         });
     });
 });

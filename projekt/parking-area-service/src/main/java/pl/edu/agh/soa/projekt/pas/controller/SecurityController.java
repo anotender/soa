@@ -36,6 +36,10 @@ public class SecurityController {
         return SecurityUtils.getLoggedUser().isPresent();
     }
 
+    public boolean isAdmin() {
+        return SecurityUtils.isAdmin();
+    }
+
     public boolean isNotEmpty(String s) {
         return s != null && s.length() != 0;
     }

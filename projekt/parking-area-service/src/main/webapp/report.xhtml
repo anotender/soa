@@ -7,35 +7,42 @@
 <h:head>
 </h:head>
 <h:body>
+    <ui:include src="fragments/unauthenticated.xhtml"/>
     <ui:include src="fragments/unauthorized.xhtml"/>
-    <ui:fragment rendered="#{securityController.isAuthenticated()}">
+    <ui:fragment rendered="#{securityController.isAuthenticated() and securityController.isAdmin()}">
         <ui:include src="fragments/navbar.xhtml"/>
         <b:container id="dashboard">
-            <b:column colMd="6">
-                <b:panel
-                        title="Parking places popularity (not paid stops: #{reportController.countParkingPlacesWithoutTicket()})"
-                        collapsible="false" colMd="6">
-                    <b:dataTable value="#{reportController.getParkingPlacesPopularity().entrySet().toArray()}"
-                                 var="e">
-                        <c:set value="#{e.key}" var="k"/>
-                        <c:set value="#{e.value}" var="v"/>
-                        <b:dataTableColumn value="#{k.id}" label="ID"/>
-                        <b:dataTableColumn value="#{k.street.area.name}" label="Area"/>
-                        <b:dataTableColumn value="#{k.street.name}" label="Street"/>
-                        <b:dataTableColumn value="#{v}" label="Popularity" order="desc"/>
-                    </b:dataTable>
-                </b:panel>
-            </b:column>
-            <b:column colMd="6">
-                <b:panel
-                        title="Duration popularity in minutes (average: #{reportController.countAverageDuration()})"
-                        collapsible="false">
-                    <b:dataTable value="#{reportController.getDurationPopularity().entrySet().toArray()}" var="e">
-                        <b:dataTableColumn value="#{e.key}" label="Duration"/>
-                        <b:dataTableColumn value="#{e.value}" label="Occurences"/>
-                    </b:dataTable>
-                </b:panel>
-            </b:column>
+            <b:row>
+                <b:button value="Download PDF report" href="report-file" colMd="4"/>
+            </b:row>
+            <br/>
+            <b:row>
+                <b:column colMd="6">
+                    <b:panel
+                            title="Parking places popularity (not paid stops: #{reportController.countParkingPlacesWithoutTicket()})"
+                            collapsible="false" colMd="6">
+                        <b:dataTable value="#{reportController.getParkingPlacesPopularity().entrySet().toArray()}"
+                                     var="e">
+                            <c:set value="#{e.key}" var="k"/>
+                            <c:set value="#{e.value}" var="v"/>
+                            <b:dataTableColumn value="#{k.id}" label="ID"/>
+                            <b:dataTableColumn value="#{k.street.area.name}" label="Area"/>
+                            <b:dataTableColumn value="#{k.street.name}" label="Street"/>
+                            <b:dataTableColumn value="#{v}" label="Popularity" order="desc"/>
+                        </b:dataTable>
+                    </b:panel>
+                </b:column>
+                <b:column colMd="6">
+                    <b:panel
+                            title="Duration popularity in minutes (average: #{reportController.countAverageDuration()})"
+                            collapsible="false">
+                        <b:dataTable value="#{reportController.getDurationPopularity().entrySet().toArray()}" var="e">
+                            <b:dataTableColumn value="#{e.key}" label="Duration"/>
+                            <b:dataTableColumn value="#{e.value}" label="Occurrences"/>
+                        </b:dataTable>
+                    </b:panel>
+                </b:column>
+            </b:row>
         </b:container>
     </ui:fragment>
 </h:body>

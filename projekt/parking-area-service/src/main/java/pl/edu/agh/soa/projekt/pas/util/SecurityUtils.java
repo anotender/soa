@@ -13,12 +13,11 @@ import java.util.Optional;
 public class SecurityUtils {
 
     public static HttpSession getSession() {
-        return getRequest().getSession(true);
+        return getSession(getRequest());
     }
 
     public static Optional<User> getLoggedUser() {
-        Object u = getSession().getAttribute("user");
-        return Objects.isNull(u) ? Optional.empty() : Optional.of((User) u);
+        return getLoggedUser(getSession());
     }
 
     public static void redirect(String page) {
@@ -33,11 +32,27 @@ public class SecurityUtils {
     }
 
     public static boolean isAdmin() {
-        return isAdmin(getLoggedUser().orElseThrow(RuntimeException::new));
+        return getLoggedUser()
+                .filter(SecurityUtils::isAdmin)
+                .isPresent();
     }
 
     public static boolean isAdmin(User u) {
         return u.getRole().equals(Role.ADMIN);
+    }
+
+    public static boolean isAdmin(HttpServletRequest req) {
+        return getLoggedUser(getSession(req))
+                .filter(SecurityUtils::isAdmin)
+                .isPresent();
+    }
+
+    public static boolean isAuthenticated(HttpServletRequest req) {
+        return getLoggedUser(getSession(req)).isPresent();
+    }
+
+    private static HttpSession getSession(HttpServletRequest req) {
+        return req.getSession(true);
     }
 
     private static HttpServletRequest getRequest() {
@@ -45,5 +60,10 @@ public class SecurityUtils {
                 .getCurrentInstance()
                 .getExternalContext()
                 .getRequest();
+    }
+
+    private static Optional<User> getLoggedUser(HttpSession session) {
+        Object u = session.getAttribute("user");
+        return Objects.isNull(u) ? Optional.empty() : Optional.of((User) u);
     }
 }
