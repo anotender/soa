@@ -32,8 +32,4 @@ public class TicketRepository {
     public void update(Ticket t) {
         em.merge(t);
     }
-
-    public void delete(Ticket t) {
-        em.remove(t);
-    }
 }

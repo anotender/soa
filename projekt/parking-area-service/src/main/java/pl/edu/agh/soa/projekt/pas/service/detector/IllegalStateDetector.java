@@ -7,10 +7,7 @@ import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 @Singleton
 @Startup
@@ -24,20 +21,23 @@ public class IllegalStateDetector {
 
     private Ticket ticketToExpire;
 
+    private ScheduledFuture<?> scheduledFuture;
+
     public void registerTicket(Ticket ticket) {
         if (Objects.isNull(ticketToExpire) || expiresEarlier(ticket)) {
             ticketToExpire = ticket;
             CompletableFuture
                     .runAsync(() -> {
                         try {
-                            Executors
+                            scheduledFuture = Executors
                                     .newSingleThreadScheduledExecutor()
                                     .schedule(
-                                            () -> notificationHandler.notifyUsers(ticketToExpire.getParkingPlace().getId()),
+                                            () -> notificationHandler.sendMessage(prepareMessage()),
                                             ticketToExpire.getExpirationTime() - System.currentTimeMillis(),
                                             TimeUnit.MILLISECONDS
-                                    )
-                                    .get();
+                                    );
+
+                            scheduledFuture.get();
                         } catch (InterruptedException | ExecutionException e) {
                             throw new RuntimeException(e);
                         }
@@ -49,8 +49,18 @@ public class IllegalStateDetector {
         }
     }
 
+    public void unregisterTicket(Ticket ticket) {
+        if (Objects.nonNull(ticketToExpire) && ticket.getId().equals(ticketToExpire.getId())) {
+            scheduledFuture.cancel(true);
+            ticketToExpire = null;
+        }
+    }
+
     private boolean expiresEarlier(Ticket ticket) {
         return ticket.getExpirationTime() < ticketToExpire.getExpirationTime();
     }
 
+    private String prepareMessage() {
+        return "Ticket for parking place with id: " + ticketToExpire.getParkingPlace().getId() + " has just expired";
+    }
 }

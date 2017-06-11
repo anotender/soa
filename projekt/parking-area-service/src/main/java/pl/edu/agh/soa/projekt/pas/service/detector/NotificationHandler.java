@@ -9,22 +9,19 @@ public class NotificationHandler {
     @Resource(mappedName = "java:/ConnectionFactory")
     private ConnectionFactory cf;
 
-    @Resource(mappedName = "java:/jms/topic/illegal-state-topic")
-    private Topic topic;
+    @Resource(mappedName = "java:/jms/queue/notification-queue")
+    private Queue queue;
 
-    public void notifyUsers(long parkingPlaceId) {
+    public void sendMessage(String msg) {
         Connection con = null;
         try {
             con = cf.createConnection();
             Session session = con.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            MessageProducer publisher = session.createProducer(topic);
+            MessageProducer publisher = session.createProducer(queue);
 
             con.start();
 
-            Message message = session.createMessage();
-            message.setLongProperty("parkingPlaceId", parkingPlaceId);
-
-            publisher.send(message);
+            publisher.send(session.createTextMessage(msg));
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

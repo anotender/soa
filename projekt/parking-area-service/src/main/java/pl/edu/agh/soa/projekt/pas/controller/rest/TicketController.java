@@ -35,10 +35,4 @@ public class TicketController {
         ticketService.saveTicket(ticket);
     }
 
-    @DELETE
-    @Path("/{id}")
-    public void deleteTicket(@PathParam("id") Long id) {
-        ticketService.deleteTicket(id);
-    }
-
 }

@@ -5,6 +5,7 @@ import pl.edu.agh.soa.projekt.pas.model.Ticket;
 import pl.edu.agh.soa.projekt.pas.repository.StreetRepository;
 import pl.edu.agh.soa.projekt.pas.repository.TicketRepository;
 import pl.edu.agh.soa.projekt.pas.service.detector.IllegalStateDetector;
+import pl.edu.agh.soa.projekt.pas.service.detector.NotificationHandler;
 import pl.edu.agh.soa.projekt.pas.util.TicketUtils;
 
 import javax.ejb.EJB;
@@ -29,6 +30,9 @@ public class TicketService {
     @EJB
     private IllegalStateDetector illegalStateDetector;
 
+    @EJB
+    private NotificationHandler notificationHandler;
+
     public Ticket getTicket(Long id) {
         return ticketRepository
                 .findOne(id)
@@ -49,20 +53,12 @@ public class TicketService {
         ticketRepository.update(t);
     }
 
-    public void deleteTicket(Long id) {
-        deleteTicket(getTicket(id));
-    }
-
     public Optional<Ticket> getFirstTicketToExpire() {
         return getTickets()
                 .stream()
                 .filter(TicketUtils::isNotExpired)
                 .sorted(Comparator.comparing(Ticket::getExpirationTime))
                 .findFirst();
-    }
-
-    private void deleteTicket(Ticket t) {
-        ticketRepository.delete(t);
     }
 
     private void bindTicketWithParkingPlace(Long ticketId) {
@@ -75,6 +71,8 @@ public class TicketService {
         findOccupiedParkingPlaceWithoutTicket(parkingPlaces).ifPresent(parkingPlace -> {
             ticket.setParkingPlace(parkingPlace);
             updateTicket(ticket);
+            String message = "Ticket with id: " + ticketId + " has just been bound to parking place with id: " + parkingPlace.getId();
+            notificationHandler.sendMessage(message);
         });
     }
 
