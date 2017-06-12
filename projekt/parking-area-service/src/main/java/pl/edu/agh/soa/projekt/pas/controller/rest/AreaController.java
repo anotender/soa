@@ -1,5 +1,6 @@
 package pl.edu.agh.soa.projekt.pas.controller.rest;
 
+import pl.edu.agh.soa.projekt.pas.model.dto.AreaDTO;
 import pl.edu.agh.soa.projekt.pas.model.dto.ParkingPlaceDTO;
 import pl.edu.agh.soa.projekt.pas.model.dto.StreetDTO;
 import pl.edu.agh.soa.projekt.pas.service.area.AreaService;
@@ -16,42 +17,44 @@ import java.util.List;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
-@Path("/street")
-public class StreetController {
+@Path("/area")
+public class AreaController {
+
+    @EJB
+    private AreaService areaService;
+
     @EJB
     private StreetService streetService;
 
     @EJB
     private ParkingPlaceService parkingPlaceService;
 
-    @EJB
-    private AreaService areaService;
-
     @GET
     @Path("/{id}")
     @Produces(APPLICATION_JSON)
-    public Response getStreet(@PathParam("id") Long id) {
-        return Response.ok(streetService.getStreetDTO(id)).build();
+    public Response getArea(@PathParam("id") Long id) {
+        return Response.ok(areaService.getAreaDTO(id)).build();
+    }
+
+    @GET
+    @Path("/{id}/street")
+    @Produces(APPLICATION_JSON)
+    public List<StreetDTO> getStreetsForArea(@PathParam("id") Long id) {
+        return streetService.getStreetDTOsForArea(id);
     }
 
     @GET
     @Path("/{id}/parkingplace")
     @Produces(APPLICATION_JSON)
-    public List<ParkingPlaceDTO> getParkingPlacesForStreet(@PathParam("id") Long id) {
-        return parkingPlaceService.getParkingPlaceDTOsForStreet(id);
-    }
-
-    @GET
-    @Path("/{id}/area")
-    @Produces(APPLICATION_JSON)
-    public Response getAreaForStreet(@PathParam("id") Long id) {
-        return Response.ok(areaService.getAreaDTOByStreetId(id)).build();
+    public List<ParkingPlaceDTO> getParkingPlacesForArea(@PathParam("id") Long id) {
+        return parkingPlaceService.getParkingPlaceDTOsForArea(id);
     }
 
     @GET
     @Path("/")
     @Produces(APPLICATION_JSON)
-    public List<StreetDTO> getStreets() {
-        return streetService.getStreetDTOs();
+    public List<AreaDTO> getAreas() {
+        return areaService.getAreas();
     }
+
 }

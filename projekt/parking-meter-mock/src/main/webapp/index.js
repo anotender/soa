@@ -7,9 +7,7 @@ $(function () {
         var data = JSON.stringify({
             'duration': minutes,
             'expirationTime': expirationTime,
-            'parkingMeter': {
-                'id': parkingMeterId
-            }
+            'parkingMeterId': parkingMeterId
         });
 
         $.ajax({

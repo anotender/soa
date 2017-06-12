@@ -2,7 +2,9 @@ package pl.edu.agh.soa.projekt.pas.service.parkingplace;
 
 import pl.edu.agh.soa.projekt.pas.model.ParkingPlace;
 import pl.edu.agh.soa.projekt.pas.model.User;
+import pl.edu.agh.soa.projekt.pas.model.dto.ParkingPlaceDTO;
 import pl.edu.agh.soa.projekt.pas.repository.ParkingPlaceRepository;
+import pl.edu.agh.soa.projekt.pas.util.DTOMapper;
 import pl.edu.agh.soa.projekt.pas.util.SecurityUtils;
 
 import javax.ejb.EJB;
@@ -28,8 +30,41 @@ public class ParkingPlaceService {
                 .orElseThrow(RuntimeException::new);
     }
 
-    public List<ParkingPlace> getParkingPlaces() {
-        return parkingPlaceRepository.findAll();
+    public ParkingPlaceDTO getParkingPlaceDTO(long id) {
+        return parkingPlaceRepository
+                .findOne(id)
+                .map(DTOMapper::mapParkingPlaceToParkingPlaceDTO)
+                .orElseThrow(RuntimeException::new);
+    }
+
+    public ParkingPlaceDTO getParkingPlaceDTOForTicket(Long id) {
+        return parkingPlaceRepository
+                .findOneByTicketId(id)
+                .map(DTOMapper::mapParkingPlaceToParkingPlaceDTO)
+                .orElseThrow(RuntimeException::new);
+    }
+
+    public List<ParkingPlaceDTO> getParkingPlaceDTOs() {
+        return getParkingPlaces()
+                .stream()
+                .map(DTOMapper::mapParkingPlaceToParkingPlaceDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<ParkingPlaceDTO> getParkingPlaceDTOsForStreet(long id) {
+        return parkingPlaceRepository
+                .findByStreetId(id)
+                .stream()
+                .map(DTOMapper::mapParkingPlaceToParkingPlaceDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<ParkingPlaceDTO> getParkingPlaceDTOsForArea(Long id) {
+        return parkingPlaceRepository
+                .findByAreaId(id)
+                .stream()
+                .map(DTOMapper::mapParkingPlaceToParkingPlaceDTO)
+                .collect(Collectors.toList());
     }
 
     public List<ParkingPlace> getParkingPlacesForLoggedUser() {
@@ -53,5 +88,9 @@ public class ParkingPlaceService {
 
     public void updateParkingPlace(ParkingPlace parkingPlace) {
         parkingPlaceRepository.update(parkingPlace);
+    }
+
+    private List<ParkingPlace> getParkingPlaces() {
+        return parkingPlaceRepository.findAll();
     }
 }

@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @EqualsAndHashCode(exclude = {"id", "users", "streets"})
@@ -22,8 +22,8 @@ public class Area {
     private String name;
 
     @OneToMany(mappedBy = "area")
-    private List<User> users;
+    private Set<User> users;
 
     @OneToMany(mappedBy = "area")
-    private List<Street> streets;
+    private Set<Street> streets;
 }

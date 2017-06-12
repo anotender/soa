@@ -1,12 +1,14 @@
 package pl.edu.agh.soa.projekt.pas.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.Set;
 
 @Data
+@EqualsAndHashCode(exclude = {"area", "parkingPlaces", "parkingMeters"})
 @Entity
 @Table(name = "street")
 public class Street {
@@ -24,8 +26,8 @@ public class Street {
     private Area area;
 
     @OneToMany(mappedBy = "street")
-    private List<ParkingPlace> parkingPlaces;
+    private Set<ParkingPlace> parkingPlaces;
 
     @OneToMany(mappedBy = "street")
-    private List<ParkingMeter> parkingMeters;
+    private Set<ParkingMeter> parkingMeters;
 }

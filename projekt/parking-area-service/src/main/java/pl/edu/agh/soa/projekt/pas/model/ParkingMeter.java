@@ -3,10 +3,7 @@ package pl.edu.agh.soa.projekt.pas.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
-
-import static javax.persistence.FetchType.EAGER;
-import static javax.persistence.GenerationType.AUTO;
+import java.util.Set;
 
 @Data
 @Entity
@@ -22,5 +19,5 @@ public class ParkingMeter {
     private Street street;
 
     @OneToMany(mappedBy = "parkingMeter")
-    private List<Ticket> tickets;
+    private Set<Ticket> tickets;
 }

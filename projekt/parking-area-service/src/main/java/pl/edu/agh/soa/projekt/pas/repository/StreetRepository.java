@@ -19,12 +19,6 @@ public class StreetRepository {
         return Optional.ofNullable(em.find(Street.class, id));
     }
 
-    public List<Street> findAll() {
-        return (List<Street>) em
-                .createQuery("from Street")
-                .getResultList();
-    }
-
     public Optional<Street> findStreetByParkingMeterId(Long parkingMeterId) {
         try {
             Object result = em
@@ -40,5 +34,22 @@ public class StreetRepository {
             e.printStackTrace();
             return Optional.empty();
         }
+    }
+
+    public List<Street> findAll() {
+        return (List<Street>) em
+                .createQuery("from Street")
+                .getResultList();
+    }
+
+    public List<Street> findByAreaId(Long id) {
+        return (List<Street>) em
+                .createQuery("" +
+                        "select a.streets " +
+                        "from Area a " +
+                        "where a.id = :areaId"
+                )
+                .setParameter("areaId", id)
+                .getResultList();
     }
 }

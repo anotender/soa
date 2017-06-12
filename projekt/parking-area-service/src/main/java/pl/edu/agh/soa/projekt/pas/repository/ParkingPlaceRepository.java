@@ -26,7 +26,46 @@ public class ParkingPlaceRepository {
         return Optional.ofNullable(em.find(ParkingPlace.class, id));
     }
 
+    public Optional<ParkingPlace> findOneByTicketId(Long id) {
+        try {
+            Object result = em
+                    .createQuery("" +
+                            "select t.parkingPlace " +
+                            "from Ticket t " +
+                            "where t.id = :ticketId"
+                    )
+                    .setParameter("ticketId", id)
+                    .getSingleResult();
+            return Optional.of((ParkingPlace) result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
+    }
+
     public void update(ParkingPlace p) {
         em.merge(p);
+    }
+
+    public List<ParkingPlace> findByStreetId(long id) {
+        return (List<ParkingPlace>) em
+                .createQuery("" +
+                        "select s.parkingPlaces " +
+                        "from Street s " +
+                        "where s.id = :streetId"
+                )
+                .setParameter("streetId", id)
+                .getResultList();
+    }
+
+    public List<ParkingPlace> findByAreaId(Long id) {
+        return (List<ParkingPlace>) em
+                .createQuery("" +
+                        "select s.parkingPlaces " +
+                        "from Street s " +
+                        "where s.area.id = :areaId"
+                )
+                .setParameter("areaId", id)
+                .getResultList();
     }
 }

@@ -2,20 +2,20 @@ package pl.edu.agh.soa.projekt.pas.service.ticket;
 
 import pl.edu.agh.soa.projekt.pas.model.ParkingPlace;
 import pl.edu.agh.soa.projekt.pas.model.Ticket;
+import pl.edu.agh.soa.projekt.pas.model.dto.TicketDTO;
 import pl.edu.agh.soa.projekt.pas.repository.StreetRepository;
 import pl.edu.agh.soa.projekt.pas.repository.TicketRepository;
 import pl.edu.agh.soa.projekt.pas.service.detector.IllegalStateDetector;
 import pl.edu.agh.soa.projekt.pas.service.detector.NotificationHandler;
+import pl.edu.agh.soa.projekt.pas.util.DTOMapper;
 import pl.edu.agh.soa.projekt.pas.util.TicketUtils;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.transaction.Transactional;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Singleton
 @Startup
@@ -33,20 +33,22 @@ public class TicketService {
     @EJB
     private NotificationHandler notificationHandler;
 
-    public Ticket getTicket(Long id) {
+    public TicketDTO getTicketDTO(Long id) {
         return ticketRepository
                 .findOne(id)
+                .map(DTOMapper::mapTicketToTicketDTO)
                 .orElseThrow(RuntimeException::new);
     }
 
-    public List<Ticket> getTickets() {
-        return ticketRepository.findAll();
+    public List<TicketDTO> getTicketDTOs() {
+        return getTickets()
+                .stream()
+                .map(DTOMapper::mapTicketToTicketDTO)
+                .collect(Collectors.toList());
     }
 
-    public void saveTicket(Ticket t) {
-        ticketRepository.save(t);
-        bindTicketWithParkingPlace(t.getId());
-        illegalStateDetector.registerTicket(t);
+    public void saveTicket(TicketDTO ticketDTO) {
+        saveTicket(DTOMapper.mapTicketDTOToTicket(ticketDTO));
     }
 
     public void updateTicket(Ticket t) {
@@ -61,12 +63,22 @@ public class TicketService {
                 .findFirst();
     }
 
+    private void saveTicket(Ticket t) {
+        ticketRepository.save(t);
+        bindTicketWithParkingPlace(t.getId());
+        illegalStateDetector.registerTicket(t);
+    }
+
+    private List<Ticket> getTickets() {
+        return ticketRepository.findAll();
+    }
+
     private void bindTicketWithParkingPlace(Long ticketId) {
         Ticket ticket = ticketRepository
                 .findOne(ticketId)
                 .orElseThrow(RuntimeException::new);
 
-        List<ParkingPlace> parkingPlaces = findPossibleParkingPlacesForTicket(ticket);
+        Set<ParkingPlace> parkingPlaces = findPossibleParkingPlacesForTicket(ticket);
 
         findOccupiedParkingPlaceWithoutTicket(parkingPlaces).ifPresent(parkingPlace -> {
             ticket.setParkingPlace(parkingPlace);
@@ -76,7 +88,7 @@ public class TicketService {
         });
     }
 
-    private Optional<ParkingPlace> findOccupiedParkingPlaceWithoutTicket(List<ParkingPlace> parkingPlaces) {
+    private Optional<ParkingPlace> findOccupiedParkingPlaceWithoutTicket(Set<ParkingPlace> parkingPlaces) {
         return parkingPlaces
                 .stream()
                 .filter(ParkingPlace::isOccupied)
@@ -84,7 +96,7 @@ public class TicketService {
                 .findAny();
     }
 
-    private List<ParkingPlace> findPossibleParkingPlacesForTicket(Ticket t) {
+    private Set<ParkingPlace> findPossibleParkingPlacesForTicket(Ticket t) {
         return streetRepository
                 .findStreetByParkingMeterId(t.getParkingMeter().getId())
                 .orElseThrow(RuntimeException::new)
