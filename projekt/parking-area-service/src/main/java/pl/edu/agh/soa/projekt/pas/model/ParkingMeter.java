@@ -1,11 +1,13 @@
 package pl.edu.agh.soa.projekt.pas.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Data
+@EqualsAndHashCode(exclude = {"street", "tickets"})
 @Entity
 @Table(name = "parking_meter")
 public class ParkingMeter {

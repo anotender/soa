@@ -54,7 +54,7 @@ public class AreaController {
     @Path("/")
     @Produces(APPLICATION_JSON)
     public List<AreaDTO> getAreas() {
-        return areaService.getAreas();
+        return areaService.getAreaDTOs();
     }
 
 }

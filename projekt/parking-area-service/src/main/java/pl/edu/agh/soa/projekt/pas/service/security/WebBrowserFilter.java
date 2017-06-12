@@ -13,7 +13,12 @@ import java.util.List;
 @WebFilter(urlPatterns = {"/*"})
 public class WebBrowserFilter implements Filter {
 
-    private static final List<String> EXCLUDED_PATHS = Arrays.asList("rest", "ParkingPlaceSOAPServiceImpl");
+    private static final List<String> EXCLUDED_PATHS = Arrays.asList(
+            "rest",
+            "ParkingPlaceSOAPServiceImpl",
+            "StreetSOAPServiceImpl",
+            "AreaSOAPServiceImpl"
+    );
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

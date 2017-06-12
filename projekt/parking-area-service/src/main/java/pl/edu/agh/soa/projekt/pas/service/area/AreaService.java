@@ -33,7 +33,7 @@ public class AreaService {
                 .orElseThrow(RuntimeException::new);
     }
 
-    public List<AreaDTO> getAreas() {
+    public List<AreaDTO> getAreaDTOs() {
         return areaRepository
                 .findAll()
                 .stream()

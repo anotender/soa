@@ -1,11 +1,13 @@
 package pl.edu.agh.soa.projekt.pas.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Data
+@EqualsAndHashCode(exclude = {"parkingMeter", "parkingPlace"})
 @Entity
 @Table(name = "ticket")
 public class Ticket {

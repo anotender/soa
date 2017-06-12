@@ -3,6 +3,7 @@ package pl.edu.agh.soa.projekt.pas.service.parkingplace.soap.impl;
 import pl.edu.agh.soa.projekt.pas.model.HistoricEvent;
 import pl.edu.agh.soa.projekt.pas.model.ParkingPlace;
 import pl.edu.agh.soa.projekt.pas.model.Ticket;
+import pl.edu.agh.soa.projekt.pas.model.dto.ParkingPlaceDTO;
 import pl.edu.agh.soa.projekt.pas.service.detector.IllegalStateDetector;
 import pl.edu.agh.soa.projekt.pas.service.detector.NotificationHandler;
 import pl.edu.agh.soa.projekt.pas.service.historicevent.HistoricEventService;
@@ -13,6 +14,7 @@ import pl.edu.agh.soa.projekt.pas.service.ticket.TicketService;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Objects;
 
 @WebService(endpointInterface = "pl.edu.agh.soa.projekt.pas.service.parkingplace.soap.api.ParkingPlaceSOAPService")
@@ -41,6 +43,21 @@ public class ParkingPlaceSOAPServiceImpl implements ParkingPlaceSOAPService {
     public void leavePlace(long id) {
         changeParkingPlaceState(id, false);
         notificationHandler.sendMessage("Parking place with id: " + id + " has just been left");
+    }
+
+    @Override
+    public List<ParkingPlaceDTO> getParkingPlaces() {
+        return parkingPlaceService.getParkingPlaceDTOs();
+    }
+
+    @Override
+    public List<ParkingPlaceDTO> getParkingPlacesForStreet(long id) {
+        return parkingPlaceService.getParkingPlaceDTOsForStreet(id);
+    }
+
+    @Override
+    public List<ParkingPlaceDTO> getParkingPlacesForArea(long id) {
+        return parkingPlaceService.getParkingPlaceDTOsForArea(id);
     }
 
     @Transactional
