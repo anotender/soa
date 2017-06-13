@@ -46,4 +46,16 @@ public class SecurityService {
         sessions.remove(user);
         session.invalidate();
     }
+
+    public void invalidateSession(String username) {
+        sessions
+                .entrySet()
+                .stream()
+                .filter(e -> e.getKey().getUsername().equals(username))
+                .findFirst()
+                .ifPresent(e -> {
+                    e.getValue().invalidate();
+                    sessions.remove(e.getKey());
+                });
+    }
 }

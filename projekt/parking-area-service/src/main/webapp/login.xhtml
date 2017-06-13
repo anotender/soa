@@ -16,6 +16,10 @@
         <b:alert severity="danger" colMd="4" offsetMd="4" style="margin-top: 10px;" closable="true"
                  rendered="#{securityController.isNotEmpty(securityController.message)}">
             <h:outputText value="#{securityController.message}"/>
+            <h:form rendered="#{securityController.invalidateSessionLink}">
+                <h:commandLink action="#{securityController.invalidateSession(securityController.username)}"
+                               value="Invalidate existing session"/>
+            </h:form>
         </b:alert>
         <h:form styleClass="form-signin" prependId="false">
             <b:inputText placeholder="Username" value="#{securityController.username}" required="true">

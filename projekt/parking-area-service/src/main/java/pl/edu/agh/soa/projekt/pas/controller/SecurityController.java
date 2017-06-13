@@ -1,5 +1,7 @@
 package pl.edu.agh.soa.projekt.pas.controller;
 
+import pl.edu.agh.soa.projekt.pas.exception.InvalidCredentialsException;
+import pl.edu.agh.soa.projekt.pas.exception.SessionAlreadyExistsException;
 import pl.edu.agh.soa.projekt.pas.service.security.SecurityService;
 import pl.edu.agh.soa.projekt.pas.util.SecurityUtils;
 
@@ -17,18 +19,29 @@ public class SecurityController {
     private String username;
     private String password;
     private String message;
+    private boolean invalidateSessionLink = false;
 
     public void login() {
         try {
             securityService.login(username, password);
             SecurityUtils.redirect("index.xhtml");
-        } catch (Exception e) {
+        } catch (InvalidCredentialsException e) {
             message = e.getMessage();
+        } catch (SessionAlreadyExistsException e) {
+            message = e.getMessage();
+            invalidateSessionLink = true;
         }
     }
 
     public void logout() {
         securityService.logout();
+        SecurityUtils.redirect("login.xhtml");
+    }
+
+    public void invalidateSession(String username) {
+        securityService.invalidateSession(username);
+        invalidateSessionLink = false;
+        message = null;
         SecurityUtils.redirect("login.xhtml");
     }
 
@@ -66,5 +79,13 @@ public class SecurityController {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public boolean isInvalidateSessionLink() {
+        return invalidateSessionLink;
+    }
+
+    public void setInvalidateSessionLink(boolean invalidateSessionLink) {
+        this.invalidateSessionLink = invalidateSessionLink;
     }
 }
